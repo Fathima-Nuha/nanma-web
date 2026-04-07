@@ -1,0 +1,295 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+.nanma-login-page {
+  min-height: 100vh;
+  background: #fbf9f4;
+  color: #1b1c19;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+}
+
+.nanma-login-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 32px;
+  background: transparent;
+}
+
+.nanma-login-brand {
+  font-family: 'Manrope', sans-serif;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #1b1c19;
+}
+
+.nanma-login-help {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: #6e5c37;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  
+}
+
+.nanma-login-main {
+  min-height: 100vh;
+  display: flex;
+}
+
+.nanma-login-left,
+.nanma-login-right {
+  width: 50%;
+  min-height: 100vh;
+}
+
+.nanma-login-left {
+  position: relative;
+  overflow: hidden;
+}
+
+.nanma-login-left-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nanma-login-left-overlay {
+  position: absolute;
+  inset: 0;
+  /* background: rgba(0, 0, 0, 0.12); */
+   background: rgba(0, 0, 0, 0.25);
+  z-index: 1;
+}
+
+.nanma-login-left-text {
+  position: absolute;
+  left: 64px;
+  bottom: 64px;
+  z-index: 2;
+  max-width: 480px;
+  color: #fff;
+}
+
+.nanma-login-left-text h2 {
+  font-family: 'Manrope', sans-serif;
+  font-size: 54px;
+  line-height: 1.05;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+
+.nanma-login-left-text p {
+  font-size: 21px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.nanma-login-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: #fbf9f4;
+  position: relative;
+}
+
+.nanma-login-right::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #f5f3ee;
+  opacity: 0.5;
+}
+
+.nanma-login-card {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 560px;
+  padding: 56px 48px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 12px 32px rgba(27, 28, 25, 0.06);
+}
+
+.nanma-login-card-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.nanma-login-card-header h1 {
+  font-family: 'Manrope', sans-serif;
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 14px;
+}
+
+.nanma-login-card-header p {
+  font-size: 17px;
+  line-height: 1.75;
+  color: #4c463b;
+}
+
+.nanma-login-form {
+  width: 100%;
+}
+
+.nanma-login-input-group label {
+  display: block;
+  margin-bottom: 10px;
+  margin-left: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #7e766a;
+}
+
+.nanma-login-phone-row {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #e4e2dd;
+  padding-bottom: 10px;
+}
+
+.nanma-login-phone-row span {
+  margin-right: 12px;
+  color: #6e5c37;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.nanma-login-phone-row input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'Manrope', sans-serif;
+  font-size: 26px;
+  letter-spacing: 0.08em;
+  color: #1b1c19;
+}
+
+.nanma-login-phone-row input::placeholder {
+  color: rgba(126, 118, 106, 0.35);
+}
+
+.nanma-login-continue {
+  display: block;
+  width: 100%;
+  margin-top: 34px;
+  padding: 18px 20px;
+  border-radius: 999px;
+  text-align: center;
+  background: linear-gradient(135deg, #6e5c37 0%, #c1aa7f 100%);
+  color: #fff;
+  font-family: 'Manrope', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.nanma-login-support {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 14px;
+  color: #7e766a;
+}
+
+.nanma-login-support a {
+  color: #6e5c37;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.nanma-login-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 26px 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #7e766a;
+  z-index: 20;
+}
+
+.nanma-login-footer-links {
+  display: flex;
+  gap: 28px;
+}
+
+@media (max-width: 1100px) {
+  .nanma-login-left {
+    display: none;
+  }
+
+  .nanma-login-right {
+    width: 100%;
+  }
+
+  .nanma-login-footer {
+    position: static;
+    padding: 24px;
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .nanma-login-navbar {
+    padding: 18px 18px;
+  }
+
+  .nanma-login-brand {
+    font-size: 26px;
+  }
+
+  .nanma-login-right {
+    padding: 18px;
+  }
+
+  .nanma-login-card {
+    padding: 32px 22px;
+  }
+
+  .nanma-login-card-header h1 {
+    font-size: 48px;
+  font-weight: 800;
+  }
+
+  .nanma-login-card-header p {
+    font-size: 15px;
+  }
+
+  .nanma-login-phone-row input {
+    font-size: 20px;
+  }
+
+  .nanma-login-continue {
+    padding: 20px;
+  font-size: 20px;
+  }
+
+  .nanma-login-footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

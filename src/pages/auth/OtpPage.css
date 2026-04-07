@@ -1,0 +1,253 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+/* ── Page shell ─────────────────────────────────────────────── */
+.nanma-otp-page {
+  min-height: 100vh;
+  display: flex;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── Left dark panel ────────────────────────────────────────── */
+.nanma-otp-left {
+  width: 38%;
+  min-height: 100vh;
+  background-color: #13100b;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg transform='translate(50,50)' fill='none' stroke='rgba(196,162,101,0.13)' stroke-width='0.6'%3E%3Ccircle r='46'/%3E%3Ccircle r='33'/%3E%3Ccircle r='20'/%3E%3Ccircle r='7'/%3E%3Cline x1='-46' y1='0' x2='46' y2='0'/%3E%3Cline x1='0' y1='-46' x2='0' y2='46'/%3E%3Cline x1='-32.5' y1='-32.5' x2='32.5' y2='32.5'/%3E%3Cline x1='32.5' y1='-32.5' x2='-32.5' y2='32.5'/%3E%3Cpath d='M0,-46 C10,-28 10,-18 0,-12 C-10,-18 -10,-28 0,-46Z'/%3E%3Cpath d='M0,46 C10,28 10,18 0,12 C-10,18 -10,28 0,46Z'/%3E%3Cpath d='M-46,0 C-28,10 -18,10 -12,0 C-18,-10 -28,-10 -46,0Z'/%3E%3Cpath d='M46,0 C28,10 18,10 12,0 C18,-10 28,-10 46,0Z'/%3E%3Cpath d='M-32.5,-32.5 C-20,-18 -14,-12 -8,-8 C-12,-14 -18,-20 -32.5,-32.5Z'/%3E%3Cpath d='M32.5,-32.5 C20,-18 14,-12 8,-8 C12,-14 18,-20 32.5,-32.5Z'/%3E%3Cpath d='M-32.5,32.5 C-20,18 -14,12 -8,8 C-12,14 -18,20 -32.5,32.5Z'/%3E%3Cpath d='M32.5,32.5 C20,18 14,12 8,8 C12,14 18,20 32.5,32.5Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 100px 100px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.nanma-otp-left-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+  padding: 48px 40px;
+}
+
+.nanma-otp-temple-icon svg {
+  width: 72px;
+  height: 72px;
+}
+
+.nanma-otp-quote {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 18px;
+  line-height: 1.7;
+  text-align: center;
+  max-width: 300px;
+  margin: 0;
+}
+
+.nanma-otp-left-footer {
+  position: absolute;
+  bottom: 28px;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Right cream panel ──────────────────────────────────────── */
+.nanma-otp-right {
+  flex: 1;
+  min-height: 100vh;
+  background: #f8f5f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 32px 80px;
+  position: relative;
+}
+
+/* Brand */
+.nanma-otp-brand {
+  font-family: 'Manrope', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #1b1c19;
+  margin-bottom: auto;
+}
+
+.nanma-otp-brand-bold  { font-weight: 800; }
+.nanma-otp-brand-light { font-weight: 300; }
+
+/* Card */
+.nanma-otp-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.07);
+  padding: 52px 44px 44px;
+  width: 100%;
+  max-width: 480px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nanma-otp-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #1b1c19;
+  margin: 0 0 14px;
+  text-align: center;
+}
+
+.nanma-otp-subtitle {
+  font-size: 14px;
+  color: #6b6459;
+  text-align: center;
+  line-height: 1.65;
+  margin: 0 0 32px;
+  max-width: 260px;
+}
+
+/* OTP boxes */
+.nanma-otp-inputs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.nanma-otp-box {
+  width: 52px;
+  height: 62px;
+  background: #f0ece5;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  text-align: center;
+  font-family: 'Manrope', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1b1c19;
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+  caret-color: #8b7355;
+}
+
+.nanma-otp-box::placeholder {
+  color: rgba(110, 92, 55, 0.25);
+  font-size: 20px;
+}
+
+.nanma-otp-box:focus {
+  border-color: #8b7355;
+  background: #fff;
+}
+
+/* Verify button */
+.nanma-otp-verify-btn {
+  width: 100%;
+  padding: 17px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #6e5c37 0%, #c1aa7f 100%);
+  color: #fff;
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  cursor: pointer;
+  margin-bottom: 24px;
+  transition: opacity 0.15s;
+}
+
+.nanma-otp-verify-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Resend row */
+.nanma-otp-resend-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: #6b6459;
+  margin-bottom: 16px;
+}
+
+.nanma-otp-clock-icon {
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+  color: #6b6459;
+}
+
+.nanma-otp-resend-row strong {
+  color: #8b7355;
+  font-weight: 700;
+}
+
+.nanma-otp-resend-btn {
+  background: none;
+  border: none;
+  color: #8b7355;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0;
+}
+
+/* Change number */
+.nanma-otp-change-btn {
+  background: none;
+  border: none;
+  color: #8b7355;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+}
+
+/* Error */
+.nanma-otp-error {
+  color: #c0392b;
+  font-size: 13px;
+  text-align: center;
+  margin: 0 0 14px;
+  width: 100%;
+}
+
+/* Right footer */
+.nanma-otp-right-footer {
+  position: absolute;
+  bottom: 28px;
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #b5afa7;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .nanma-otp-left {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .nanma-otp-card {
+    padding: 36px 20px 32px;
+  }
+
+  .nanma-otp-box {
+    width: 44px;
+    height: 54px;
+    font-size: 20px;
+  }
+}

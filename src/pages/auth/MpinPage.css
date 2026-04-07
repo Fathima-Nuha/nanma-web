@@ -1,0 +1,264 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@1,400;1,500&display=swap');
+
+/* ── Page shell ─────────────────────────────────────────────── */
+.nanma-mpin-page {
+  min-height: 100vh;
+  display: flex;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── Left dark panel ────────────────────────────────────────── */
+.nanma-mpin-left {
+  width: 48%;
+  min-height: 100vh;
+  background-color: #13100b;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='460' height='460' viewBox='0 0 460 460'%3E%3Cg transform='translate(230,230)' fill='none' stroke='rgba(180,140,60,0.18)' stroke-width='0.7'%3E%3Ccircle r='210'/%3E%3Ccircle r='180'/%3E%3Ccircle r='150'/%3E%3Ccircle r='120'/%3E%3Ccircle r='90'/%3E%3Ccircle r='60'/%3E%3Ccircle r='30'/%3E%3Ccircle r='10'/%3E%3Cpath d='M0,-210 C40,-160 40,-80 0,-40 C-40,-80 -40,-160 0,-210Z'/%3E%3Cpath d='M0,210 C40,160 40,80 0,40 C-40,80 -40,160 0,210Z'/%3E%3Cpath d='M-210,0 C-160,40 -80,40 -40,0 C-80,-40 -160,-40 -210,0Z'/%3E%3Cpath d='M210,0 C160,40 80,40 40,0 C80,-40 160,-40 210,0Z'/%3E%3Cpath d='M-148,-148 C-100,-100 -60,-60 -28,-28 C-60,-60 -100,-100 -148,-148Z'/%3E%3Cpath d='M148,-148 C100,-100 60,-60 28,-28 C60,-60 100,-100 148,-148Z'/%3E%3Cpath d='M-148,148 C-100,100 -60,60 -28,28 C-60,60 -100,100 -148,148Z'/%3E%3Cpath d='M148,148 C100,100 60,60 28,28 C60,60 100,100 148,148Z'/%3E%3Cline x1='-210' y1='0' x2='210' y2='0'/%3E%3Cline x1='0' y1='-210' x2='0' y2='210'/%3E%3Cline x1='-148' y1='-148' x2='148' y2='148'/%3E%3Cline x1='148' y1='-148' x2='-148' y2='148'/%3E%3Cpath d='M0,-30 C8,-18 8,-8 0,0 C-8,-8 -8,-18 0,-30Z'/%3E%3Cpath d='M0,30 C8,18 8,8 0,0 C-8,8 -8,18 0,30Z'/%3E%3Cpath d='M-30,0 C-18,8 -8,8 0,0 C-8,-8 -18,-8 -30,0Z'/%3E%3Cpath d='M30,0 C18,8 8,8 0,0 C8,-8 18,-8 30,0Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 460px 460px;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 64px 56px;
+  overflow: hidden;
+}
+
+.nanma-mpin-left-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(196, 162, 101, 0.7);
+  margin-bottom: 20px;
+}
+
+.nanma-mpin-left-divider {
+  width: 36px;
+  height: 1.5px;
+  background: rgba(196, 162, 101, 0.5);
+  margin-bottom: 20px;
+  display: block;
+}
+
+.nanma-mpin-quote {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-style: italic;
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0 0 28px;
+  max-width: 360px;
+}
+
+.nanma-mpin-author {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Right cream panel ──────────────────────────────────────── */
+.nanma-mpin-right {
+  flex: 1;
+  min-height: 100vh;
+  background: #f8f5f0;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 48px 32px;
+  position: relative;
+}
+
+.nanma-mpin-brand {
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #1b1c19;
+  margin-bottom: 48px;
+}
+
+.nanma-mpin-brand-bold  { font-weight: 800; }
+.nanma-mpin-brand-light { font-weight: 300; }
+
+/* Card */
+.nanma-mpin-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.07);
+  padding: 48px 44px 40px;
+  width: 100%;
+  max-width: 540px;
+}
+
+.nanma-mpin-card-title {
+  font-family: 'Manrope', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1b1c19;
+  margin: 0 0 10px;
+}
+
+.nanma-mpin-card-subtitle {
+  font-size: 14px;
+  color: #6b6459;
+  line-height: 1.65;
+  margin: 0 0 32px;
+  max-width: 320px;
+}
+
+/* Text inputs */
+.nanma-mpin-field {
+  margin-bottom: 24px;
+}
+
+.nanma-mpin-field-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #7e766a;
+  margin-bottom: 8px;
+}
+
+.nanma-mpin-text-input {
+  width: 100%;
+  border: none;
+  border-bottom: 1.5px solid #dedad4;
+  background: transparent;
+  padding: 8px 0 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: #1b1c19;
+  outline: none;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.nanma-mpin-text-input::placeholder {
+  color: #b8b2a9;
+}
+
+.nanma-mpin-text-input:focus {
+  border-bottom-color: #8b7355;
+}
+
+/* MPIN boxes */
+.nanma-mpin-box-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #7e766a;
+  margin-bottom: 12px;
+}
+
+.nanma-mpin-boxes {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.nanma-mpin-box {
+  width: 52px;
+  height: 58px;
+  background: #f0ece5;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  text-align: center;
+  font-family: 'Manrope', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1b1c19;
+  outline: none;
+  transition: border-color 0.15s, background 0.15s;
+  -webkit-text-security: disc;
+}
+
+.nanma-mpin-box:focus {
+  border-color: #8b7355;
+  background: #fff;
+}
+
+/* Submit */
+.nanma-mpin-submit-btn {
+  width: 100%;
+  padding: 17px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #8b7355 0%, #c1aa7f 100%);
+  color: #fff;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 8px;
+  margin-bottom: 20px;
+  transition: opacity 0.15s;
+}
+
+.nanma-mpin-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* "Already have an MPIN?" */
+.nanma-mpin-login-link {
+  text-align: center;
+  font-size: 14px;
+  color: #6b6459;
+}
+
+.nanma-mpin-login-link a,
+.nanma-mpin-login-link button {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #8b7355;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Error */
+.nanma-mpin-error {
+  color: #c0392b;
+  font-size: 13px;
+  margin: -8px 0 14px;
+}
+
+/* Footer */
+.nanma-mpin-footer {
+  margin-top: auto;
+  padding-top: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #b5afa7;
+}
+
+.nanma-mpin-footer-links {
+  display: flex;
+  gap: 24px;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .nanma-mpin-left { display: none; }
+  .nanma-mpin-right { padding: 32px 24px; }
+}
+
+@media (max-width: 480px) {
+  .nanma-mpin-card { padding: 32px 20px; }
+  .nanma-mpin-box { width: 44px; height: 50px; font-size: 18px; }
+}
