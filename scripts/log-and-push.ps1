@@ -1,6 +1,7 @@
 # ─────────────────────────────────────────────────────────────
 # Nanma Living — Auto Changelog + Progress Updater + Git Push
-# Usage: cd to project root, then run: .\scripts\log-and-push.ps1
+# Usage: npm run push
+# Automatically detects changed files and updates docs.
 # ─────────────────────────────────────────────────────────────
 
 $root = Split-Path -Parent $PSScriptRoot
@@ -10,34 +11,27 @@ Set-Location $root
 Write-Host "`nChanged files:" -ForegroundColor Cyan
 git status --short
 
-# ── 2. Ask for changelog entry ────────────────────────────────
-Write-Host "`nWhat did you change? (will be added to CHANGELOG.md)" -ForegroundColor Yellow
-Write-Host "   Press Enter after each line. Leave blank to skip a section.`n"
-
+# ── 2. Auto-detect changed files from git ────────────────────
+$gitStatus = git status --short
 $added   = @()
 $changed = @()
-$fixed   = @()
 
-Write-Host "  ADDED (new pages/features):" -ForegroundColor Green
-while ($true) {
-    $line = Read-Host "    +"
-    if ($line -eq 'done' -or $line -eq '') { break }
-    $added += "- $line"
+foreach ($line in $gitStatus) {
+    $status = $line.Substring(0, 2).Trim()
+    $file   = $line.Substring(3).Trim()
+    $name   = Split-Path $file -Leaf
+
+    if ($status -eq '??' -or $status -eq 'A') {
+        $added += "- ``$name`` (new file)"
+    } elseif ($status -eq 'M' -or $status -eq 'AM') {
+        $changed += "- ``$name``"
+    } elseif ($status -eq 'R') {
+        $changed += "- ``$name`` (renamed/moved)"
+    } elseif ($status -eq 'D') {
+        $changed += "- ``$name`` (deleted)"
+    }
 }
 
-Write-Host "  CHANGED (existing features updated):" -ForegroundColor Blue
-while ($true) {
-    $line = Read-Host "    ~"
-    if ($line -eq 'done' -or $line -eq '') { break }
-    $changed += "- $line"
-}
-
-Write-Host "  FIXED (bugs resolved):" -ForegroundColor Red
-while ($true) {
-    $line = Read-Host "    !"
-    if ($line -eq 'done' -or $line -eq '') { break }
-    $fixed += "- $line"
-}
 
 # ── 3. Build changelog entry ──────────────────────────────────
 $date  = Get-Date -Format "yyyy-MM-dd"
@@ -48,9 +42,6 @@ if ($added.Count -gt 0) {
 }
 if ($changed.Count -gt 0) {
     $entry += "`n### Changed`n" + ($changed -join "`n") + "`n"
-}
-if ($fixed.Count -gt 0) {
-    $entry += "`n### Fixed`n" + ($fixed -join "`n") + "`n"
 }
 
 # Prepend new entry after the header lines
@@ -66,10 +57,10 @@ if ($parts.Count -eq 2) {
 }
 
 Set-Content $changelogPath $newContent -NoNewline
-Write-Host "`nCHANGELOG.md updated." -ForegroundColor Green
+Write-Host "CHANGELOG.md updated." -ForegroundColor Green
 
 # ── 4. Auto-update progress.md file status ────────────────────
-$progressPath = "$root\docs\progress.md"
+$progressPath    = "$root\docs\progress.md"
 $progressContent = Get-Content $progressPath -Raw
 
 $fileChecks = @{
@@ -78,34 +69,26 @@ $fileChecks = @{
     "MpinPage.jsx / .css"          = "src\pages\auth\MpinPage.jsx"
     "MpinVerifyPage.jsx / .css"    = "src\pages\auth\MpinVerifyPage.jsx"
     "PortalSelectPage.jsx"         = "src\pages\auth\PortalSelectPage.jsx"
-    "AddFlatPage.jsx / .css"       = "src\pages\auth\AddFlatPage.jsx"
-    "SelectApartmentPage.jsx"      = "src\pages\auth\SelectApartmentPage.jsx"
+    "AddFlatPage.jsx / .css"       = "src\pages\user\AddFlatPage.jsx"
+    "SelectApartmentPage.jsx"      = "src\pages\user\SelectApartmentPage.jsx"
     "DashboardPage.jsx"            = "src\pages\admin\DashboardPage.jsx"
     "ApartmentGroupPage.jsx"       = "src\pages\admin\ApartmentGroupPage.jsx"
-}
-
-$roadmapChecks = @{
-    "Login flow"          = "src\pages\auth\MpinVerifyPage.jsx"
-    "Add Flat page"       = "src\pages\auth\AddFlatPage.jsx"
-    "Select Apartment"    = "src\pages\auth\SelectApartmentPage.jsx"
-    "Admin Dashboard"     = "src\pages\admin\DashboardPage.jsx"
 }
 
 foreach ($label in $fileChecks.Keys) {
     $filePath = "$root\" + $fileChecks[$label]
     if (Test-Path $filePath) {
-        # Replace any variant of "label  [pending marker]" with done marker
-        $progressContent = $progressContent -replace ([regex]::Escape($label) + '\s+\S+\s+Pending'), "$label          [Done]"
-        $progressContent = $progressContent -replace ([regex]::Escape($label) + '\s+\[Pending\]'), "$label          [Done]"
+        $escapedLabel = [regex]::Escape($label)
+        $progressContent = $progressContent -replace "$escapedLabel\s+\S+\s+(Pending|pending)", "$label          Done"
     }
 }
 
 Set-Content $progressPath $progressContent -NoNewline
-Write-Host "progress.md status updated." -ForegroundColor Green
+Write-Host "progress.md updated." -ForegroundColor Green
 
-# ── 5. Commit message ─────────────────────────────────────────
-Write-Host "`nEnter your git commit message:" -ForegroundColor Yellow
-$commitMsg = Read-Host "   message"
+# ── 5. Commit message (only thing you type) ───────────────────
+Write-Host "`nCommit message (press Enter for auto):" -ForegroundColor Yellow
+$commitMsg = Read-Host "  >"
 if ($commitMsg -eq '') { $commitMsg = "update [$date]" }
 
 # ── 6. Stage, commit, push ────────────────────────────────────
@@ -114,3 +97,4 @@ git commit -m $commitMsg
 git push origin main
 
 Write-Host "`nPushed to GitHub successfully!`n" -ForegroundColor Green
+

@@ -5,6 +5,22 @@ Format: `[Date] — What changed | Why / Notes`
 
 ---
 
+## [2026-04-08] — Restructure: user module + docs + automation
+
+### Added
+- `docs/progress.md` — project structure, flow diagram, API table, roadmap
+- `CHANGELOG.md` — this file
+- `scripts/log-and-push.ps1` — auto changelog updater + git push script
+- `npm run push` shortcut added to `package.json`
+
+### Changed
+- Moved `AddFlatPage.jsx / .css` from `pages/auth/` to `pages/user/`
+- Moved `SelectApartmentPage.jsx` from `pages/auth/` to `pages/user/`
+- Updated `AppRouter.jsx` import paths accordingly
+- Updated `progress.md` structure to reflect new folder layout
+
+---
+
 ## [2026-04-08] — Login Module Complete + Add Flat Page
 
 ### Added
@@ -69,3 +85,12 @@ After every meaningful push, add a new entry at the top:
 ---
 
 ## [2026-04-08]
+
+---
+
+## [2026-04-08]
+
+### Changed
+- `CHANGELOG.md`
+- `progress.md`
+- `log-and-push.ps1`

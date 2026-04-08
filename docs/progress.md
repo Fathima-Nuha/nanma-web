@@ -17,9 +17,9 @@ src/
       MpinPage.jsx / .css           ✅ Done
       MpinVerifyPage.jsx / .css     ✅ Done
       PortalSelectPage.jsx          ✅ Done
+    user/
       AddFlatPage.jsx / .css        ✅ Done
       SelectApartmentPage.jsx       🔲 UI pending
-    user/
     admin/
       DashboardPage.jsx             🔲 UI pending
       ApartmentGroupPage.jsx        🔲 UI pending
