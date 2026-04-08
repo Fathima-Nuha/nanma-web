@@ -1,0 +1,381 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@1,400;1,500&display=swap');
+
+/* ── Page Shell ──────────────────────────────────────────── */
+.nanma-add-flat-page {
+  min-height: 100vh;
+  display: flex;
+  font-family: 'Inter', sans-serif;
+  background: #fbf9f4;
+}
+
+/* ── Left Panel ──────────────────────────────────────────── */
+.nanma-add-flat-left {
+  width: 42%;
+  min-height: 100vh;
+  background: #2b2b22;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 64px 48px;
+}
+
+/* Decorative diamond star */
+.nanma-add-flat-star {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  opacity: 0.18;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -52%);
+  pointer-events: none;
+}
+
+.nanma-add-flat-brand {
+  font-family: 'Manrope', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: #c9a96e;
+  text-transform: uppercase;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  margin-bottom: 56px;
+}
+
+.nanma-add-flat-quote {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 320px;
+}
+
+.nanma-add-flat-quote p {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.72);
+  margin-bottom: 20px;
+}
+
+.nanma-add-flat-quote cite {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: rgba(201, 169, 110, 0.65);
+  text-transform: uppercase;
+  font-style: normal;
+}
+
+/* Thin vertical line below quote */
+.nanma-add-flat-left-line {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 72px;
+  background: linear-gradient(to bottom, rgba(201, 169, 110, 0.35), transparent);
+}
+
+/* ── Right Panel ─────────────────────────────────────────── */
+.nanma-add-flat-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64px 48px;
+  background: #f8f5ef;
+  position: relative;
+}
+
+.nanma-add-flat-header {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 28px;
+}
+
+.nanma-add-flat-header h1 {
+  font-family: 'Manrope', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #1b1b16;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.nanma-add-flat-header p {
+  font-size: 14px;
+  color: #7a7265;
+  line-height: 1.6;
+}
+
+/* ── Card ────────────────────────────────────────────────── */
+.nanma-add-flat-card {
+  width: 100%;
+  max-width: 500px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px 40px 36px;
+  box-shadow: 0 8px 28px rgba(27, 27, 22, 0.07);
+}
+
+/* ── Form Fields ─────────────────────────────────────────── */
+.nanma-add-flat-field {
+  margin-bottom: 28px;
+}
+
+.nanma-add-flat-field label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: #9a9186;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.nanma-add-flat-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-bottom: 1.5px solid #ddd8d0;
+  transition: border-color 0.2s;
+}
+
+.nanma-add-flat-clear-btn {
+  position: absolute;
+  right: 40px; /* Adjust based on your icon position */
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  border-radius: 50%;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.nanma-add-flat-clear-btn:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+  color: #333;
+}
+
+.nanma-add-flat-clear-btn .material-symbols-outlined {
+  font-size: 18px;
+}
+
+/* Adjust input padding to make room for the clear button */
+.nanma-add-flat-search-wrap input {
+  padding-right: 70px; /* Room for both clear btn and icon */
+}
+
+.nanma-add-flat-input-wrap:focus-within {
+  border-color: #8b6f3d;
+}
+
+.nanma-add-flat-input-wrap input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: #1b1b16;
+  padding: 8px 0;
+  caret-color: #8b6f3d;
+}
+
+.nanma-add-flat-input-wrap input::placeholder {
+  color: #c4bdb3;
+  font-size: 14px;
+}
+
+.nanma-add-flat-select {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: #1b1b16;
+  padding: 8px 0;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.nanma-add-flat-select:focus {
+  outline: none;
+}
+
+.nanma-add-flat-select option {
+  color: #1b1b16;
+  background: #ffffff;
+}
+
+/* ── Searchable dropdown ─────────────────────────────────── */
+.nanma-add-flat-search-wrap {
+  position: relative;
+  flex-wrap: wrap;
+}
+
+.nanma-add-flat-suggestions {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  border: 1px solid #e0dbd3;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(27, 27, 22, 0.1);
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+  z-index: 50;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.nanma-add-flat-suggestions li {
+  padding: 10px 16px;
+  font-size: 14px;
+  color: #1b1b16;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.nanma-add-flat-suggestions li:hover {
+  background: #f5f0e8;
+  color: #8b6f3d;
+}
+
+.nanma-add-flat-suggestions-empty {
+  color: #9a9186 !important;
+  cursor: default !important;
+  font-style: italic;
+}
+
+.nanma-add-flat-input-readonly {
+  color: #9a9186 !important;
+  cursor: default;
+}
+
+.nanma-add-flat-input-icon {
+  color: #b0a89e;
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-left: 8px;
+  line-height: 1;
+}
+
+/* ── Button ──────────────────────────────────────────────── */
+.nanma-add-flat-btn {
+  width: 100%;
+  padding: 16px 24px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #8b6f3d 0%, #a8884d 100%);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.nanma-add-flat-btn:hover:not(:disabled) {
+  opacity: 0.92;
+  transform: translateY(-1px);
+}
+
+.nanma-add-flat-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.nanma-add-flat-btn-icon {
+  width: 20px;
+  height: 20px;
+  opacity: 0.85;
+}
+
+/* ── Cancel ──────────────────────────────────────────────── */
+.nanma-add-flat-cancel {
+  display: block;
+  text-align: center;
+  margin-top: 18px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #9a9186;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: color 0.2s;
+}
+
+.nanma-add-flat-cancel:hover {
+  color: #5a5248;
+}
+
+/* ── Progress bar ────────────────────────────────────────── */
+.nanma-add-flat-progress {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 320px;
+}
+
+.nanma-add-flat-progress-line {
+  flex: 1;
+  height: 2px;
+  background: #e0dbd3;
+}
+
+.nanma-add-flat-progress-line.active {
+  background: #8b6f3d;
+}
+
+.nanma-add-flat-progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #d4cec6;
+  flex-shrink: 0;
+}
+
+.nanma-add-flat-progress-dot.active {
+  background: #8b6f3d;
+}
+
+/* ── Error ───────────────────────────────────────────────── */
+.nanma-add-flat-error {
+  font-size: 13px;
+  color: #c0392b;
+  margin-top: 12px;
+  text-align: center;
+}

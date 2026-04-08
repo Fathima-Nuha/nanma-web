@@ -55,7 +55,13 @@ function MpinVerifyPage() {
       localStorage.setItem('refresh_token', data.tokens?.refresh ?? '')
       localStorage.setItem('csrf_token', data.csrf ?? '')
       localStorage.setItem('user_id', data.user_id ?? '')
-      navigate('/portal-select')
+      localStorage.setItem('user_name', data.username ?? '')
+
+      if (data.user_has_appartment) {
+        navigate('/select-apartment')
+      } else {
+        navigate('/add-flat')
+      }
     } catch {
       setError('Network error. Please try again.')
     } finally {
