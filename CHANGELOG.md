@@ -52,3 +52,10 @@ After every meaningful push, add a new entry at the top:
 ---
 
 ## [2026-04-08]
+
+### Added
+- added progress and changelog file
+
+---
+
+## [2026-04-08]
