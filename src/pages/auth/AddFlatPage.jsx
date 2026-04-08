@@ -47,14 +47,14 @@ function AddFlatPage() {
     }
     setLoading(true)
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/add_flat`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/add_flat_request`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('access_token')}` },
         body: JSON.stringify({
-          name: userName,
+          username: userName,
           building_id: form.buildingId,
           flat_id: form.flatId,
-          flat_number: form.flatNumber.trim(),
+          user_id: localStorage.getItem('user_id'),
         }),
       })
       const data = await response.json()
@@ -152,7 +152,7 @@ function AddFlatPage() {
                       </button>
                     )
                 }
-                
+
                 <span className="nanma-add-flat-input-icon material-symbols-outlined" aria-hidden="true">domain</span>
                 {showBuildingSuggestions && (
                   <ul className="nanma-add-flat-suggestions">
