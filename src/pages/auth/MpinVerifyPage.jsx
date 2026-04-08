@@ -57,10 +57,26 @@ function MpinVerifyPage() {
       localStorage.setItem('user_id', data.user_id ?? '')
       localStorage.setItem('user_name', data.username ?? '')
 
-      if (data.user_has_appartment) {
-        navigate('/select-apartment')
+      const primaryRoleId = data.user_roles?.[0]?.id ?? null
+      localStorage.setItem('user_role', primaryRoleId)
+
+      if (primaryRoleId === 1) {
+        navigate('/super-admin/dashboard')
+      } else if (primaryRoleId === 2) {
+        navigate('/admin/dashboard')
+      } else if (primaryRoleId === 4) {
+        navigate('/watchman/dashboard')
+      } else if (primaryRoleId === 5) {
+        navigate('/vendor/dashboard')
+      } else if (primaryRoleId === 6) {
+        navigate('/caretaker/dashboard')
       } else {
-        navigate('/add-flat')
+        // role 3 (user) — check if they have an apartment
+        if (data.user_has_appartment) {
+          navigate('/user/dashboard')
+        } else {
+          navigate('/add-flat')
+        }
       }
     } catch {
       setError('Network error. Please try again.')

@@ -62,7 +62,7 @@ function AddFlatPage() {
         setError(data.message || 'Failed to add flat. Please try again.')
         return
       }
-      navigate('/select-apartment')
+      navigate('/user/dashboard')
     } catch {
       setError('Network error. Please try again.')
     } finally {

@@ -90,6 +90,18 @@ After every meaningful push, add a new entry at the top:
 
 ## [2026-04-08]
 
+### Added
+- `UserDashboardPage.jsx` (new file)
+
+### Changed
+- `MpinVerifyPage.jsx`
+- `AddFlatPage.jsx`
+- `AppRouter.jsx`
+
+---
+
+## [2026-04-08]
+
 ### Changed
 - `CHANGELOG.md`
 - `progress.md`
