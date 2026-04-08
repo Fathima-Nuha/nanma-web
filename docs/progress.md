@@ -19,6 +19,7 @@ src/
       PortalSelectPage.jsx          ✅ Done
       AddFlatPage.jsx / .css        ✅ Done
       SelectApartmentPage.jsx       🔲 UI pending
+    user/
     admin/
       DashboardPage.jsx             🔲 UI pending
       ApartmentGroupPage.jsx        🔲 UI pending

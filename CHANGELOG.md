@@ -54,6 +54,16 @@ After every meaningful push, add a new entry at the top:
 ## [2026-04-08]
 
 ### Added
+- added a userpage to move add flat and select flat features to the folder
+
+### Changed
+- changed the folder structure
+
+---
+
+## [2026-04-08]
+
+### Added
 - added progress and changelog file
 
 ---
