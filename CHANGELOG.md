@@ -90,6 +90,14 @@ After every meaningful push, add a new entry at the top:
 
 ## [2026-04-09]
 
+### Changed
+- `UserDashboardPage.css`
+- `UserDashboardPage.jsx`
+
+---
+
+## [2026-04-09]
+
 ### Added
 - `PortalSelectPage.css` (new file)
 - `SelectApartmentPage.css` (new file)

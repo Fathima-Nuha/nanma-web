@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './UserDashboardPage.css'
 
@@ -7,6 +7,19 @@ const NAV_ITEMS = [
   { key: 'complaints', label: 'Complaints', icon: 'report_problem' },
   { key: 'utility', label: 'Utility Scan', icon: 'sensors' },
   { key: 'facilities', label: 'Facilities', icon: 'layers' },
+  { key: 'basket', label: 'Daily Basket', icon: 'shopping_basket' },
+  { key: 'farm2door', label: 'Farm2Door', icon: 'eco' },
+  { key: 'payments', label: 'Payments', icon: 'receipt_long' },
+  { key: 'accounts', label: 'My Accounts', icon: 'manage_accounts' },
+  { key: 'groups', label: 'Groups', icon: 'group' },
+  { key: 'broadcast', label: 'Broadcast', icon: 'campaign' },
+  { key: 'events', label: 'Events', icon: 'event' },
+  { key: 'visitors', label: 'My Visitors', icon: 'person_pin' },
+  { key: 'offers', label: 'Offers Hub', icon: 'local_offer' },
+  { key: 'marketplace', label: 'MarketPlace', icon: 'storefront' },
+  { key: 'help', label: 'Help & Feedback', icon: 'help_outline' },
+  { key: 'gym', label: 'Gym Directory', icon: 'fitness_center' },
+  { key: 'sos', label: 'Emergency SOS', icon: 'emergency' },
 ]
 
 const SERVICES = [
@@ -16,6 +29,17 @@ const SERVICES = [
   { key: 'facilities', label: 'Facilities', icon: 'layers', desc: 'Reserve the spa, gym, or tennis courts.' },
   { key: 'basket', label: 'Daily Basket', icon: 'shopping_basket', desc: 'Artisan pantry staples delivered daily.' },
   { key: 'farm2door', label: 'Farm2Door', icon: 'eco', desc: 'Direct link to local agricultural harvests.' },
+  { key: 'payments', label: 'Payments', icon: 'receipt_long', desc: 'Pay maintenance and utility bills online.' },
+  { key: 'accounts', label: 'My Accounts', icon: 'manage_accounts', desc: 'Manage your profile and preferences.' },
+  { key: 'groups', label: 'Groups', icon: 'group', desc: 'Connect with your building community.' },
+  { key: 'broadcast', label: 'Broadcast', icon: 'campaign', desc: 'Important announcements from management.' },
+  { key: 'events', label: 'Events', icon: 'event', desc: 'Upcoming community events and activities.' },
+  { key: 'visitors', label: 'My Visitors', icon: 'person_pin', desc: 'Track and manage your guest entries.' },
+  { key: 'offers', label: 'Offers Hub', icon: 'local_offer', desc: 'Exclusive deals and resident discounts.' },
+  { key: 'marketplace', label: 'MarketPlace', icon: 'storefront', desc: 'Buy and sell within your community.' },
+  { key: 'help', label: 'Help & Feedback', icon: 'help_outline', desc: 'Get support or share your feedback.' },
+  { key: 'gym', label: 'Gym Directory', icon: 'fitness_center', desc: 'Equipment guide and booking for the gym.' },
+  { key: 'sos', label: 'Emergency SOS', icon: 'emergency', desc: 'Instant alert to security and management.' },
 ]
 
 const EVENTS = [
@@ -42,13 +66,56 @@ const VISITORS = [
   { id: 2, name: 'Sara Khan', initials: 'SK', time: 'Checked In: 10:15 AM', status: 'ACTIVE', statusClass: 'active' },
 ]
 
+const SPOTLIGHT_SLIDES = [
+  {
+    id: 1,
+    badge: 'Concierge Spotlight',
+    title: 'Farm-to-Door Delivery',
+    desc: 'Savor the freshest organic produce from local orchards, delivered directly to your doorstep every Tuesday morning.',
+    img: 'https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=300&q=70',
+    cta: 'Schedule First Basket',
+  },
+  {
+    id: 2,
+    badge: 'Offers Hub',
+    title: '20% Off Spa Services',
+    desc: 'Unwind this weekend with exclusive resident discounts on all spa and wellness treatments. Valid through April 30.',
+    img: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=300&q=70',
+    cta: 'Book Now',
+  },
+  {
+    id: 3,
+    badge: 'Offers Hub',
+    title: 'Rooftop Dining Night',
+    desc: 'Enjoy a complimentary appetizer at the rooftop restaurant every Friday evening. Show your resident card to avail.',
+    img: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=300&q=70',
+    cta: 'Reserve a Table',
+  },
+  {
+    id: 4,
+    badge: 'Offers Hub',
+    title: 'Free Gym Guest Pass',
+    desc: 'Bring a friend to the gym on weekends at no cost. Passes are limited — claim yours before they run out.',
+    img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=300&q=70',
+    cta: 'Claim Pass',
+  },
+]
+
 function UserDashboardPage() {
   const navigate = useNavigate()
   const [activeNav, setActiveNav] = useState('services')
+  const [slideIndex, setSlideIndex] = useState(0)
 
   const userName = localStorage.getItem('user_name') || 'Resident'
   const apartmentNumber = localStorage.getItem('selected_apartment_number') || ''
   const buildingName = localStorage.getItem('selected_building_name') || ''
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setSlideIndex(i => (i + 1) % SPOTLIGHT_SLIDES.length)
+    }, 4000)
+    return () => clearInterval(timer)
+  }, [])
 
   const handleLogout = () => {
     localStorage.clear()
@@ -148,7 +215,7 @@ function UserDashboardPage() {
               </div>
               <div className="ud-services-grid">
                 {SERVICES.map(svc => (
-                  <div key={svc.key} className="ud-service-card">
+                  <div key={svc.key} className={`ud-service-card${svc.key === 'sos' ? ' sos' : ''}`}>
                     <span className="material-symbols-outlined ud-service-icon">{svc.icon}</span>
                     <span className="ud-service-label">{svc.label}</span>
                     <span className="ud-service-desc">{svc.desc}</span>
@@ -183,20 +250,39 @@ function UserDashboardPage() {
 
           {/* Right Panel */}
           <aside className="ud-content-right">
-            {/* Concierge Spotlight */}
+            {/* Spotlight / Offers Carousel */}
             <div className="ud-spotlight-card">
-              <span className="ud-spotlight-badge">Concierge Spotlight</span>
-              <h3 className="ud-spotlight-title">Farm-to-Door Delivery</h3>
-              <p className="ud-spotlight-desc">Savor the freshest organic produce from local orchards, delivered directly to your doorstep every Tuesday morning.</p>
-              <img
-                src="https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=300&q=70"
-                alt="Farm produce"
-                className="ud-spotlight-img"
-              />
-              <button type="button" className="ud-spotlight-link">
-                Schedule First Basket
-                <span className="material-symbols-outlined">arrow_forward</span>
-              </button>
+              <div className="ud-spotlight-slides">
+                {SPOTLIGHT_SLIDES.map((slide, i) => (
+                  <div
+                    key={slide.id}
+                    className={`ud-spotlight-slide${i === slideIndex ? ' active' : ''}`}
+                  >
+                    <span className={`ud-spotlight-badge${slide.badge === 'Offers Hub' ? ' offers' : ''}`}>
+                      {slide.badge}
+                    </span>
+                    <h3 className="ud-spotlight-title">{slide.title}</h3>
+                    <p className="ud-spotlight-desc">{slide.desc}</p>
+                    <img src={slide.img} alt={slide.title} className="ud-spotlight-img" />
+                    <button type="button" className="ud-spotlight-link">
+                      {slide.cta}
+                      <span className="material-symbols-outlined">arrow_forward</span>
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              {/* Dots */}
+              <div className="ud-spotlight-dots">
+                {SPOTLIGHT_SLIDES.map((slide, i) => (
+                  <button
+                    key={slide.id}
+                    type="button"
+                    className={`ud-spotlight-dot${i === slideIndex ? ' active' : ''}`}
+                    onClick={() => setSlideIndex(i)}
+                  />
+                ))}
+              </div>
             </div>
 
             {/* Quick Actions */}

@@ -398,6 +398,18 @@
   gap: 12px;
 }
 
+.ud-service-card.sos {
+  background: #fde8e8;
+}
+
+.ud-service-card.sos .ud-service-icon {
+  color: #c0392b;
+}
+
+.ud-service-card.sos .ud-service-label {
+  color: #c0392b;
+}
+
 .ud-service-card {
   background: #fff;
   border-radius: 12px;
@@ -511,14 +523,57 @@
 .ud-content-right::-webkit-scrollbar { width: 4px; }
 .ud-content-right::-webkit-scrollbar-thumb { background: #ddd; border-radius: 4px; }
 
-/* ── Spotlight ── */
+/* ── Spotlight Carousel ── */
 .ud-spotlight-card {
   background: #fff;
   border-radius: 14px;
   padding: 20px;
   display: flex;
   flex-direction: column;
+  gap: 12px;
+}
+
+.ud-spotlight-slides {
+  position: relative;
+}
+
+.ud-spotlight-slide {
+  display: none;
+  flex-direction: column;
   gap: 10px;
+  animation: ud-fade-in 0.4s ease;
+}
+
+.ud-spotlight-slide.active {
+  display: flex;
+}
+
+@keyframes ud-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ud-spotlight-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.ud-spotlight-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ddd;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.ud-spotlight-dot.active {
+  background: #c9b96e;
+  transform: scale(1.3);
 }
 
 .ud-spotlight-badge {
@@ -531,6 +586,11 @@
   border-radius: 4px;
   padding: 3px 8px;
   align-self: flex-start;
+}
+
+.ud-spotlight-badge.offers {
+  color: #2e7d32;
+  background: #e8f5e9;
 }
 
 .ud-spotlight-title {
