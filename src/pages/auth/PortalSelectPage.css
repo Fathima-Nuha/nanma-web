@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+.nanma-portal-page {
+  min-height: 100vh;
+  background: #fbf9f4;
+  color: #1b1c19;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+}
+
+.nanma-portal-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  padding: 24px 32px;
+  background: transparent;
+}
+
+.nanma-portal-brand {
+  font-family: 'Manrope', sans-serif;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.nanma-portal-main {
+  min-height: 100vh;
+  display: flex;
+}
+
+.nanma-portal-left,
+.nanma-portal-right {
+  width: 50%;
+  min-height: 100vh;
+}
+
+.nanma-portal-left {
+  position: relative;
+  overflow: hidden;
+}
+
+.nanma-portal-left-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nanma-portal-left-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.28);
+  z-index: 1;
+}
+
+.nanma-portal-left-text {
+  position: absolute;
+  left: 64px;
+  bottom: 64px;
+  z-index: 2;
+  max-width: 480px;
+  color: #fff;
+}
+
+.nanma-portal-left-text h2 {
+  font-family: 'Manrope', sans-serif;
+  font-size: 48px;
+  line-height: 1.1;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.nanma-portal-left-text p {
+  font-size: 20px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.nanma-portal-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  background: #fbf9f4;
+}
+
+.nanma-portal-card {
+  width: 100%;
+  max-width: 520px;
+  padding: 56px 48px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 12px 32px rgba(27, 28, 25, 0.06);
+}
+
+.nanma-portal-card-header {
+  margin-bottom: 40px;
+}
+
+.nanma-portal-card-header h1 {
+  font-family: 'Manrope', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #1b1c19;
+  margin-bottom: 12px;
+}
+
+.nanma-portal-card-header p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #4c463b;
+}
+
+.nanma-portal-options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nanma-portal-option {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  padding: 22px 24px;
+  border: 2px solid #e4e2dd;
+  border-radius: 14px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+.nanma-portal-option:hover {
+  box-shadow: 0 6px 20px rgba(110, 92, 55, 0.12);
+}
+
+.nanma-portal-option-admin:hover {
+  border-color: #6e5c37;
+  background: #fffcf6;
+}
+
+.nanma-portal-option-user:hover {
+  border-color: #6e5c37;
+  background: #fffcf6;
+}
+
+.nanma-portal-option-icon {
+  font-size: 30px;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: #f5f0e8;
+  color: #6e5c37;
+}
+
+.nanma-portal-option-admin .nanma-portal-option-icon {
+  background: #f5f0e8;
+  color: #6e5c37;
+}
+
+.nanma-portal-option-user .nanma-portal-option-icon {
+  background: #eef3f0;
+  color: #3d6b57;
+}
+
+.nanma-portal-option-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nanma-portal-option-label {
+  font-family: 'Manrope', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1b1c19;
+  line-height: 1.2;
+}
+
+.nanma-portal-option-desc {
+  font-size: 14px;
+  color: #7e766a;
+  line-height: 1.5;
+}
+
+.nanma-portal-option-arrow {
+  font-size: 22px;
+  color: #bdb8b0;
+  flex-shrink: 0;
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.nanma-portal-option:hover .nanma-portal-option-arrow {
+  color: #6e5c37;
+  transform: translateX(4px);
+}
+
+@media (max-width: 768px) {
+  .nanma-portal-left {
+    display: none;
+  }
+
+  .nanma-portal-right {
+    width: 100%;
+    padding: 24px 20px;
+  }
+
+  .nanma-portal-card {
+    padding: 36px 28px;
+  }
+
+  .nanma-portal-brand {
+    color: #1b1c19;
+  }
+
+  .nanma-portal-card-header h1 {
+    font-size: 28px;
+  }
+}

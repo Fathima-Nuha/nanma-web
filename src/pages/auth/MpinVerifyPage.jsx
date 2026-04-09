@@ -58,12 +58,13 @@ function MpinVerifyPage() {
       localStorage.setItem('user_name', data.username ?? '')
 
       const primaryRoleId = data.user_roles?.[0]?.id ?? null
+      alert("Primary Role ID: " + primaryRoleId)
       localStorage.setItem('user_role', primaryRoleId)
-
       if (primaryRoleId === 1) {
         navigate('/super-admin/dashboard')
       } else if (primaryRoleId === 2) {
-        navigate('/admin/dashboard')
+        // Admin — intermediate page to choose admin portal or user portal
+        navigate('/portal-select', { state: { roleId: primaryRoleId, hasApartment: !!data.user_has_appartment, appartment_details: data.appartment_details  } })
       } else if (primaryRoleId === 4) {
         navigate('/watchman/dashboard')
       } else if (primaryRoleId === 5) {
@@ -71,12 +72,8 @@ function MpinVerifyPage() {
       } else if (primaryRoleId === 6) {
         navigate('/caretaker/dashboard')
       } else {
-        // role 3 (user) — check if they have an apartment
-        if (data.user_has_appartment) {
-          navigate('/user/dashboard')
-        } else {
-          navigate('/add-flat')
-        }
+        // role 3 (user) — intermediate page handles both select and add flat
+        navigate('/user-setup', { state: { hasApartment: !!data.user_has_appartment, appartment_details: data.appartment_details } })
       }
     } catch {
       setError('Network error. Please try again.')

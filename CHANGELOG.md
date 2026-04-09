@@ -88,6 +88,23 @@ After every meaningful push, add a new entry at the top:
 
 ---
 
+## [2026-04-09]
+
+### Added
+- `PortalSelectPage.css` (new file)
+- `SelectApartmentPage.css` (new file)
+- `UserDashboardPage.css` (new file)
+- `UserSetupPage.jsx` (new file)
+
+### Changed
+- `MpinVerifyPage.jsx`
+- `PortalSelectPage.jsx`
+- `SelectApartmentPage.jsx`
+- `UserDashboardPage.jsx`
+- `AppRouter.jsx`
+
+---
+
 ## [2026-04-08]
 
 ### Added

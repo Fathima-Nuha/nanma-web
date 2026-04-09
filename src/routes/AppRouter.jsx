@@ -6,6 +6,7 @@ import MpinVerifyPage from '../pages/auth/MpinVerifyPage'
 import PortalSelectPage from '../pages/auth/PortalSelectPage'
 import SelectApartmentPage from '../pages/user/SelectApartmentPage'
 import AddFlatPage from '../pages/user/AddFlatPage'
+import UserSetupPage from '../pages/user/UserSetupPage'
 import UserDashboardPage from '../pages/user/UserDashboardPage'
 import DashboardPage from '../pages/admin/DashboardPage'
 import ApartmentGroupPage from '../pages/admin/ApartmentGroupPage'
@@ -19,7 +20,7 @@ function AppRouter() {
       <Route path="/otp" element={<OtpPage />} />
       <Route path="/mpin-verify" element={<MpinVerifyPage />} />
       <Route path="/portal-select" element={<PortalSelectPage />} />
-      <Route path="/select-apartment" element={<SelectApartmentPage />} />
+      <Route path="/user-setup" element={<UserSetupPage />} />
       <Route path="/add-flat" element={<AddFlatPage />} />
       <Route path="/user/dashboard" element={<UserDashboardPage />} />
       <Route path="/admin/dashboard" element={<DashboardPage />} />
