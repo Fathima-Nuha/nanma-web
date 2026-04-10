@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './UserDashboardPage.css'
+import ServicesPage from './ServicesPage'
 
 const NAV_ITEMS = [
   { key: 'services', label: 'Services', icon: 'home_repair_service' },
@@ -22,7 +23,7 @@ const NAV_ITEMS = [
   { key: 'sos', label: 'Emergency SOS', icon: 'emergency' },
 ]
 
-const SERVICES = [
+const ALL_SERVICES = [
   { key: 'services', label: 'Services', icon: 'home_repair_service', desc: 'Professional housekeeping and maintenance.' },
   { key: 'complaints', label: 'Complaints', icon: 'report_problem', desc: 'Swift resolution for your living concerns.' },
   { key: 'utility', label: 'Utility Scan', icon: 'sensors', desc: 'Real-time usage and sustainability metrics.' },
@@ -40,6 +41,17 @@ const SERVICES = [
   { key: 'help', label: 'Help & Feedback', icon: 'help_outline', desc: 'Get support or share your feedback.' },
   { key: 'gym', label: 'Gym Directory', icon: 'fitness_center', desc: 'Equipment guide and booking for the gym.' },
   { key: 'sos', label: 'Emergency SOS', icon: 'emergency', desc: 'Instant alert to security and management.' },
+]
+
+const QUICK_SERVICES = [
+  { key: 'services', label: 'Services', icon: 'home_repair_service', desc: 'Housekeeping and maintenance.' },
+  { key: 'complaints', label: 'Complaints', icon: 'report_problem', desc: 'Swift resolution for concerns.' },
+  { key: 'utility', label: 'Utility Scan', icon: 'sensors', desc: 'Real-time usage metrics.' },
+  { key: 'facilities', label: 'Facilities', icon: 'layers', desc: 'Reserve spa, gym, courts.' },
+  { key: 'payments', label: 'Payments', icon: 'receipt_long', desc: 'Pay bills online.' },
+  { key: 'visitors', label: 'My Visitors', icon: 'person_pin', desc: 'Track your guest entries.' },
+  { key: 'offers', label: 'Offers Hub', icon: 'local_offer', desc: 'Exclusive resident deals.' },
+  { key: 'sos', label: 'Emergency SOS', icon: 'emergency', desc: 'Instant alert to security.' },
 ]
 
 const EVENTS = [
@@ -103,8 +115,10 @@ const SPOTLIGHT_SLIDES = [
 
 function UserDashboardPage() {
   const navigate = useNavigate()
-  const [activeNav, setActiveNav] = useState('services')
+  const [activeNav, setActiveNav] = useState(null)
   const [slideIndex, setSlideIndex] = useState(0)
+  const [showAllServices, setShowAllServices] = useState(false)
+  const [navServicesOpen, setNavServicesOpen] = useState(false)
 
   const userName = localStorage.getItem('user_name') || 'Resident'
   const apartmentNumber = localStorage.getItem('selected_apartment_number') || ''
@@ -116,6 +130,18 @@ function UserDashboardPage() {
     }, 4000)
     return () => clearInterval(timer)
   }, [])
+
+  const servicesRef = useRef(null)
+  const eventsRef = useRef(null)
+
+  const handleExploreLifestyle = () => {
+    setShowAllServices(true)
+    setTimeout(() => servicesRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50)
+  }
+
+  const handleViewSchedule = () => {
+    eventsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   const handleLogout = () => {
     localStorage.clear()
@@ -132,26 +158,57 @@ function UserDashboardPage() {
         </div>
 
         <nav className="ud-sidebar-nav">
-          {NAV_ITEMS.map(item => (
-            <button
-              key={item.key}
-              type="button"
-              className={`ud-sidebar-nav-item${activeNav === item.key ? ' active' : ''}`}
-              onClick={() => setActiveNav(item.key)}
-            >
-              <span className="material-symbols-outlined">{item.icon}</span>
-              {item.label}
-            </button>
-          ))}
+          {/* Home */}
+          <button
+            type="button"
+            className={`ud-sidebar-nav-item${activeNav === null ? ' active' : ''}`}
+            onClick={() => { setActiveNav(null); setNavServicesOpen(false) }}
+          >
+            <span className="material-symbols-outlined">home</span>
+            Home
+          </button>
+
+          {/* Services Dropdown */}
+          <button
+            type="button"
+            className={`ud-sidebar-nav-item${navServicesOpen ? ' active' : ''}`}
+            onClick={() => setNavServicesOpen(o => !o)}
+          >
+            <span className="material-symbols-outlined">apps</span>
+            Services
+            <span className={`ud-sidebar-chevron material-symbols-outlined${navServicesOpen ? ' open' : ''}`}>expand_more</span>
+          </button>
+
+          {navServicesOpen && (
+            <div className="ud-sidebar-dropdown">
+              {NAV_ITEMS.map(item => (
+                <button
+                  key={item.key}
+                  type="button"
+                  className={`ud-sidebar-dropdown-item${activeNav === item.key ? ' active' : ''}`}
+                  onClick={() => setActiveNav(item.key)}
+                >
+                  <span className="material-symbols-outlined">{item.icon}</span>
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Main Tabs */}
+          <button type="button" className="ud-sidebar-nav-item">
+            <span className="material-symbols-outlined">info</span>
+            About Us
+          </button>
+          <button type="button" className="ud-sidebar-nav-item">
+            <span className="material-symbols-outlined">contact_support</span>
+            Contact
+          </button>
         </nav>
 
         <button type="button" className="ud-sidebar-book-btn">Book Amenity</button>
 
         <div className="ud-sidebar-footer">
-          <button type="button" className="ud-sidebar-footer-link">
-            <span className="material-symbols-outlined">support_agent</span>
-            Support
-          </button>
           <button type="button" className="ud-sidebar-footer-link" onClick={handleLogout}>
             <span className="material-symbols-outlined">logout</span>
             Logout
@@ -191,6 +248,10 @@ function UserDashboardPage() {
 
         {/* Content */}
         <div className="ud-content">
+          {activeNav === 'services' ? (
+            <ServicesPage />
+          ) : (
+          <>
           <div className="ud-content-left">
             {/* Hero */}
             <section className="ud-hero">
@@ -198,24 +259,26 @@ function UserDashboardPage() {
                 <h1>Welcome home, {userName.split(' ')[0]}.</h1>
                 <p>Everything you need to curate your lifestyle is at your fingertips.</p>
                 <div className="ud-hero-btns">
-                  <button type="button" className="ud-hero-btn-primary">Explore Lifestyle</button>
-                  <button type="button" className="ud-hero-btn-secondary">View Schedule</button>
+                  <button type="button" className="ud-hero-btn-primary" onClick={handleExploreLifestyle}>Explore Lifestyle</button>
+                  <button type="button" className="ud-hero-btn-secondary" onClick={handleViewSchedule}>View Schedule</button>
                 </div>
               </div>
             </section>
 
             {/* Curated Services */}
-            <section className="ud-section">
+            <section className="ud-section" ref={servicesRef}>
               <div className="ud-section-header">
                 <div>
                   <h2 className="ud-section-title">Curated Services</h2>
                   <p className="ud-section-subtitle">Refined solutions for your daily living</p>
                 </div>
-                <button type="button" className="ud-section-view-all">View All Services</button>
+                <button type="button" className="ud-section-view-all" onClick={() => setShowAllServices(s => !s)}>
+                  {showAllServices ? 'Show Less' : 'View All Services'}
+                </button>
               </div>
               <div className="ud-services-grid">
-                {SERVICES.map(svc => (
-                  <div key={svc.key} className={`ud-service-card${svc.key === 'sos' ? ' sos' : ''}`}>
+                {(showAllServices ? ALL_SERVICES : QUICK_SERVICES).map(svc => (
+                  <div key={svc.key} className={`ud-service-card${svc.key === 'sos' ? ' sos' : ''}`} onClick={() => setActiveNav(svc.key)}>
                     <span className="material-symbols-outlined ud-service-icon">{svc.icon}</span>
                     <span className="ud-service-label">{svc.label}</span>
                     <span className="ud-service-desc">{svc.desc}</span>
@@ -225,7 +288,7 @@ function UserDashboardPage() {
             </section>
 
             {/* Community Hub */}
-            <section className="ud-section">
+            <section className="ud-section" ref={eventsRef}>
               <div className="ud-section-header">
                 <h2 className="ud-section-title">Community Hub</h2>
                 <button type="button" className="ud-section-view-all">All Events</button>
@@ -325,6 +388,8 @@ function UserDashboardPage() {
               </div>
             </div>
           </aside>
+          </>
+          )}
         </div>
       </div>
     </div>

@@ -47,7 +47,7 @@ function MpinVerifyPage() {
         }
       )
       const data = await response.json().catch(() => ({}))
-      if (!response.ok) {
+      if (data.errormessage) {
         setError(data.message || 'Incorrect MPIN. Please try again.')
         return
       }

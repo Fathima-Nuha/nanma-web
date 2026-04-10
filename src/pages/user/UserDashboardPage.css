@@ -42,12 +42,68 @@
   margin-top: 2px;
 }
 
+.ud-sidebar-nav-item .ud-sidebar-chevron {
+  margin-left: auto;
+  font-size: 16px;
+  transition: transform 0.2s;
+}
+
+.ud-sidebar-nav-item .ud-sidebar-chevron.open {
+  transform: rotate(180deg);
+}
+
+.ud-sidebar-dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: #111110;
+  border-radius: 8px;
+  margin: 2px 0 4px 0;
+  padding: 4px 0;
+  overflow: hidden;
+}
+
+.ud-sidebar-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 8px 12px 8px 28px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s, color 0.15s;
+  width: 100%;
+}
+
+.ud-sidebar-dropdown-item .material-symbols-outlined {
+  font-size: 15px;
+}
+
+.ud-sidebar-dropdown-item:hover {
+  background: #1e1e1c;
+  color: #ccc;
+}
+
+.ud-sidebar-dropdown-item.active {
+  color: #c9b96e;
+  background: #1e1e1c;
+}
+
+/* scrollable nav */
 .ud-sidebar-nav {
   display: flex;
   flex-direction: column;
   gap: 2px;
   flex: 1;
+  overflow-y: auto;
 }
+
+.ud-sidebar-nav::-webkit-scrollbar { width: 3px; }
+.ud-sidebar-nav::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 
 .ud-sidebar-nav-item {
   display: flex;
@@ -394,8 +450,9 @@
 /* ── Services Grid ── */
 .ud-services-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px;
+  transition: all 0.3s ease;
 }
 
 .ud-service-card.sos {
