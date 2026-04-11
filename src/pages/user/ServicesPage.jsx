@@ -1,61 +1,77 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './ServicesPage.css'
+import CreateServiceRequestPage from './CreateServiceRequestPage'
 
-const PERSONAL_REQUESTS = [
-  {
-    id: 71,
-    title: 'Internet Service',
-    icon: 'wifi',
-    resident: 'subin krishna',
-    date: 'Oct 24, 2023',
-    details: 'Slow connection in…',
-    status: 'IN PROGRESS',
-    statusClass: 'inprogress',
-  },
-  {
-    id: 19,
-    title: 'Wash Only',
-    icon: 'local_laundry_service',
-    resident: 'subin krishna',
-    date: 'Oct 22, 2023',
-    details: '3 bags of delicate…',
-    status: 'COMPLETED',
-    statusClass: 'completed',
-  },
-  {
-    id: 25,
-    title: 'House Cleaning',
-    icon: 'cleaning_services',
-    resident: 'subin krishna',
-    date: 'Today, 09:15 AM',
-    details: 'Deep cleaning for gues…',
-    status: 'NEW',
-    statusClass: 'new',
-  },
-]
+const SERVICE_ICON_MAP = {
+  Internet_Service: 'wifi',
+  Wash_Only: 'local_laundry_service',
+  House_Cleaning: 'cleaning_services',
+  Plumbing: 'plumbing',
+  Electrician: 'bolt',
+  Carpentry: 'handyman',
+  Pest_Control: 'bug_report',
+  Laundry: 'local_laundry_service',
+  AC_Service: 'ac_unit',
+  Gardening: 'yard',
+}
 
-const COMMUNITY_REQUESTS = [
-  {
-    id: 88,
-    title: 'Gym Equipment Repair',
-    icon: 'fitness_center',
+const STATUS_MAP = {
+  new: { label: 'NEW', cls: 'new' },
+  in_progress: { label: 'IN PROGRESS', cls: 'inprogress' },
+  inprogress: { label: 'IN PROGRESS', cls: 'inprogress' },
+  completed: { label: 'COMPLETED', cls: 'completed' },
+}
+
+function formatDate(dateStr, timeStr) {
+  if (!dateStr) return ''
+  const d = new Date(dateStr)
+  const options = { month: 'short', day: 'numeric', year: 'numeric' }
+  const datePart = d.toLocaleDateString('en-US', options)
+  if (!timeStr) return datePart
+  const t = new Date(timeStr)
+  const timePart = t.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+  return `${datePart}, ${timePart}`
+}
+
+const STATUS_ID_MAP = {
+  1: { label: 'NEW', cls: 'new' },
+  2: { label: 'IN PROGRESS', cls: 'inprogress' },
+  3: { label: 'COMPLETED', cls: 'completed' },
+  4: { label: 'CLOSED', cls: 'completed' },
+}
+
+function mapRequest(r) {
+  const statusKey = (r.status ?? '').toLowerCase()
+  const statusInfo = STATUS_MAP[statusKey] ?? { label: (r.status ?? '').toUpperCase(), cls: 'new' }
+  const serviceKey = r.service_type ?? ''
+  return {
+    id: r.personal_service_request_id,
+    title: serviceKey.replace(/_/g, ' '),
+    icon: SERVICE_ICON_MAP[serviceKey] ?? 'home_repair_service',
+    resident: r.vendor_name ?? '',
+    date: formatDate(r.service_date, r.service_time),
+    details: (r.description ?? '').slice(0, 28) + ((r.description ?? '').length > 28 ? '…' : ''),
+    status: statusInfo.label,
+    statusClass: statusInfo.cls,
+  }
+}
+
+function mapCommunityRequest(r) {
+  const statusInfo = STATUS_ID_MAP[r.status_id] ?? { label: 'NEW', cls: 'new' }
+  const serviceKey = r.service_name ?? ''
+  const dateOnly = r.service_date ? new Date(r.service_date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ''
+  const dateDisplay = dateOnly && r.service_time ? `${dateOnly}, ${r.service_time}` : dateOnly
+  return {
+    id: r.service_id,
+    title: serviceKey.replace(/_/g, ' '),
+    icon: SERVICE_ICON_MAP[serviceKey] ?? 'home_repair_service',
     resident: 'community',
-    date: 'Apr 8, 2026',
-    details: 'Treadmill belt broken…',
-    status: 'IN PROGRESS',
-    statusClass: 'inprogress',
-  },
-  {
-    id: 91,
-    title: 'Pool Maintenance',
-    icon: 'pool',
-    resident: 'community',
-    date: 'Apr 5, 2026',
-    details: 'Water level low, filter…',
-    status: 'COMPLETED',
-    statusClass: 'completed',
-  },
-]
+    date: dateDisplay,
+    details: (r.description ?? '').slice(0, 28) + ((r.description ?? '').length > 28 ? '…' : ''),
+    status: statusInfo.label,
+    statusClass: statusInfo.cls,
+  }
+}
 
 const HISTORY = [
   { id: 1, date: 'SEPT 12, 2023', title: 'Leak Repair', desc: 'The kitchen faucet was dripping since morning….', icon: 'plumbing' },
@@ -64,10 +80,64 @@ const HISTORY = [
 ]
 
 function ServicesPage() {
+  const [view, setView] = useState('list')
   const [tab, setTab] = useState('personal')
   const [search, setSearch] = useState('')
+  const [personalRequests, setPersonalRequests] = useState([])
+  const [communityRequests, setCommunityRequests] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
-  const requests = tab === 'personal' ? PERSONAL_REQUESTS : COMMUNITY_REQUESTS
+  useEffect(() => {
+    if (tab !== 'personal') return
+    const buildingId = localStorage.getItem('selected_building_id')
+    const appartmentId = localStorage.getItem('selected_apartment_id')
+    if (!buildingId || !appartmentId) return
+    setLoading(true)
+    setError(null)
+    fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/list_all_personal_servicerequest_for_user?building_id=${buildingId}&appartment_id=${appartmentId}`,
+      {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
+
+      }
+    )
+      .then(res => res.json())
+      .then(data => {
+        console.log('personal requests', data)
+        setPersonalRequests((data.servicerequest ?? []).map(mapRequest))
+      })
+      .catch(() => setError('Failed to load service requests.'))
+      .finally(() => setLoading(false))
+      
+  }, [tab])
+
+  useEffect(() => {
+    if (tab !== 'community') return
+    const appartmentId = localStorage.getItem('selected_apartment_id')
+    if (!appartmentId) return
+    setLoading(true)
+    setError(null)
+    fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/get_service_requests?flat_id=${appartmentId}`,
+      {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
+      }
+    )
+      .then(res => res.json())
+      .then(data => setCommunityRequests((data.service_requests ?? []).map(mapCommunityRequest)))
+      .catch(() => setError('Failed to load community requests.'))
+      .finally(() => setLoading(false))
+  }, [tab])
+
+  const requests = tab === 'personal' ? personalRequests : communityRequests
+
+  if (view === 'create') {
+    return <CreateServiceRequestPage onBack={() => setView('list')} />
+  }
+  
   const filtered = requests.filter(r =>
     r.title.toLowerCase().includes(search.toLowerCase()) ||
     r.details.toLowerCase().includes(search.toLowerCase())
@@ -93,7 +163,7 @@ function ServicesPage() {
                 onChange={e => setSearch(e.target.value)}
               />
             </div>
-            <button type="button" className="svc-create-btn">
+            <button type="button" className="svc-create-btn" onClick={() => setView('create')}>
               <span className="material-symbols-outlined">add</span>
               Create New Request
             </button>
@@ -124,11 +194,15 @@ function ServicesPage() {
             <span>Service &amp; Resident</span>
             <span>Details</span>
             <span>Status</span>
-            <span>Actions</span>
+
           </div>
 
           <div className="svc-table-body">
-            {filtered.length === 0 ? (
+            {loading ? (
+              <p className="svc-empty">Loading…</p>
+            ) : error ? (
+              <p className="svc-empty">{error}</p>
+            ) : filtered.length === 0 ? (
               <p className="svc-empty">No requests found.</p>
             ) : filtered.map(req => (
               <div key={req.id} className="svc-table-row">
@@ -148,11 +222,7 @@ function ServicesPage() {
                 <div className="svc-row-status">
                   <span className={`svc-status-badge ${req.statusClass}`}>{req.status}</span>
                 </div>
-                <div className="svc-row-actions">
-                  <button type="button" className="svc-action-btn">
-                    <span className="material-symbols-outlined">more_vert</span>
-                  </button>
-                </div>
+
               </div>
             ))}
           </div>
@@ -213,4 +283,4 @@ function ServicesPage() {
   )
 }
 
-export default ServicesPage
+export default React.memo(ServicesPage)

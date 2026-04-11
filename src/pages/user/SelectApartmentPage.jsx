@@ -11,6 +11,7 @@ function SelectApartmentPage() {
   const handleSelectApartment = (apt) => {
     localStorage.setItem('selected_apartment_id', apt.appartment_id ?? apt.id ?? '')
     localStorage.setItem('selected_apartment_number', apt.appartment_number ?? apt.flat_number ?? '')
+    localStorage.setItem('selected_building_id', apt.building_id ?? '')
     localStorage.setItem('selected_building_name', apt.building_name ?? '')
     navigate('/user/dashboard')
   }

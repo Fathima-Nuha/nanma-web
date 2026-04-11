@@ -134,7 +134,7 @@
 
 .svc-table-header {
   display: grid;
-  grid-template-columns: 2fr 2fr 1.2fr 0.6fr;
+  grid-template-columns: 2fr 2fr 1.2fr;
   padding: 12px 20px;
   background: #fafaf8;
   border-bottom: 1px solid #ebebeb;
@@ -152,7 +152,7 @@
 
 .svc-table-row {
   display: grid;
-  grid-template-columns: 2fr 2fr 1.2fr 0.6fr;
+  grid-template-columns: 2fr 2fr 1.2fr;
   align-items: center;
   padding: 14px 20px;
   border-bottom: 1px solid #f0f0ee;

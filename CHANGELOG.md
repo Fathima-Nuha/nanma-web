@@ -88,6 +88,19 @@ After every meaningful push, add a new entry at the top:
 
 ---
 
+## [2026-04-11]
+
+### Added
+- `CreateServiceRequestPage.css` (new file)
+- `CreateServiceRequestPage.jsx` (new file)
+
+### Changed
+- `SelectApartmentPage.jsx`
+- `ServicesPage.css`
+- `ServicesPage.jsx`
+
+---
+
 ## [2026-04-10]
 
 ### Added
