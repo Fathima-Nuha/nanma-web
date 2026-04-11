@@ -7,7 +7,11 @@ import PortalSelectPage from '../pages/auth/PortalSelectPage'
 import SelectApartmentPage from '../pages/user/SelectApartmentPage'
 import AddFlatPage from '../pages/user/AddFlatPage'
 import UserSetupPage from '../pages/user/UserSetupPage'
+import UserLayout from '../components/layout/UserLayout'
 import UserDashboardPage from '../pages/user/UserDashboardPage'
+import ServicesPage from '../pages/user/ServicesPage'
+import CreateServiceRequestPage from '../pages/user/CreateServiceRequestPage'
+import CreateCommunityServiceRequestPage from '../pages/user/CreateCommunityServiceRequestPage'
 import DashboardPage from '../pages/admin/DashboardPage'
 import ApartmentGroupPage from '../pages/admin/ApartmentGroupPage'
 
@@ -22,7 +26,15 @@ function AppRouter() {
       <Route path="/portal-select" element={<PortalSelectPage />} />
       <Route path="/user-setup" element={<UserSetupPage />} />
       <Route path="/add-flat" element={<AddFlatPage />} />
-      <Route path="/user/dashboard" element={<UserDashboardPage />} />
+
+      {/* User routes — all share the sidebar + topbar shell */}
+      <Route element={<UserLayout />}>
+        <Route path="/user/dashboard" element={<UserDashboardPage />} />
+        <Route path="/user/services" element={<ServicesPage />} />
+        <Route path="/user/services/create" element={<CreateServiceRequestPage />} />
+        <Route path="/user/services/create-community" element={<CreateCommunityServiceRequestPage />} />
+      </Route>
+
       <Route path="/admin/dashboard" element={<DashboardPage />} />
       <Route path="/admin/apartment-group" element={<ApartmentGroupPage />} />
     </Routes>

@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './CreateServiceRequestPage.css'
 
-function CreateServiceRequestPage({ onBack }) {
+function CreateServiceRequestPage() {
+  const navigate = useNavigate()
+  const goBack = () => navigate('/user/services')
   const [vendors, setVendors] = useState([])
 
   useEffect(() => {
@@ -19,14 +22,20 @@ function CreateServiceRequestPage({ onBack }) {
       .catch(() => {})
   }, [])
 
+  const LAUNDRY_TYPES = ['Iron_Only', 'Wash_Only', 'Iron_And_Wash']
+
   const [form, setForm] = useState({
     vendor: '',
     vendorServiceId: '',
     serviceName: '',
+    serviceType: '',
     serviceDate: '',
     serviceTime: '',
+    noOfPieces: '',
     description: '',
   })
+
+  const isLaundryService = LAUNDRY_TYPES.includes(form.serviceType)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
 
@@ -46,7 +55,11 @@ function CreateServiceRequestPage({ onBack }) {
       ...f,
       vendorServiceId: String(v.vendor_service_id),
       vendor: v.vendor_name,
+      serviceType: v.service_type,
       serviceName: v.service_type.replace(/_/g, ' '),
+      noOfPieces: '',
+      serviceDate: '',
+      serviceTime: '',
     }))
     setVendorOpen(false)
   }
@@ -66,6 +79,17 @@ function CreateServiceRequestPage({ onBack }) {
     }
     setSubmitting(true)
     setError(null)
+
+    const now = new Date()
+    const dd = String(now.getDate()).padStart(2, '0')
+    const mm = String(now.getMonth() + 1).padStart(2, '0')
+    const yyyy = now.getFullYear()
+    const hh = String(now.getHours() % 12 || 12).padStart(2, '0')
+    const min = String(now.getMinutes()).padStart(2, '0')
+    const sec = String(now.getSeconds()).padStart(2, '0')
+    const ampm = now.getHours() < 12 ? 'am' : 'pm'
+    const serviceDateFormatted = `${dd}/${mm}/${yyyy} ${hh}:${min}:${sec} ${ampm}`
+
     fetch(
       `${import.meta.env.VITE_API_BASE_URL}/api/v1/create_personal_service_request`,
       {
@@ -77,16 +101,17 @@ function CreateServiceRequestPage({ onBack }) {
         body: JSON.stringify({
           building_id: buildingId,
           appartment_id: appartmentId,
-          vendor_name: form.vendor,
-          service_type: form.serviceName.replace(/ /g, '_'),
-          service_date: form.serviceDate,
+          vendor_service_id: form.vendorServiceId,
+          service_category: '',
+          service_date: serviceDateFormatted,
           service_time: form.serviceTime,
+          no_of_pieces: isLaundryService ? form.noOfPieces : '',
           description: form.description,
         }),
       }
     )
       .then(res => res.json())
-      .then(() => onBack())
+      .then(() => navigate('/user/services'))
       .catch(() => setError('Failed to submit request. Please try again.'))
       .finally(() => setSubmitting(false))
   }
@@ -95,7 +120,7 @@ function CreateServiceRequestPage({ onBack }) {
     <div className="csr-page">
       {/* Breadcrumb */}
       <div className="csr-breadcrumb">
-        <button type="button" className="csr-breadcrumb-link" onClick={onBack}>Requests</button>
+        <button type="button" className="csr-breadcrumb-link" onClick={goBack}>Requests</button>
         <span className="material-symbols-outlined csr-breadcrumb-sep">chevron_right</span>
         <span>Create New</span>
       </div>
@@ -150,34 +175,49 @@ function CreateServiceRequestPage({ onBack }) {
             />
           </div>
 
-          <div className="csr-row">
+          {isLaundryService ? (
             <div className="csr-field">
-              <label className="csr-label">Service Date</label>
-              <label className="csr-input-icon-wrap">
-                <input
-                  type="date"
-                  name="serviceDate"
-                  className="csr-input"
-                  value={form.serviceDate}
-                  onChange={handleChange}
-                />
-                <span className="material-symbols-outlined csr-input-icon">calendar_month</span>
-              </label>
+              <label className="csr-label">Number of Pieces</label>
+              <input
+                type="number"
+                name="noOfPieces"
+                className="csr-input"
+                value={form.noOfPieces}
+                onChange={handleChange}
+                placeholder="Enter number of pieces"
+                min="1"
+              />
             </div>
-            <div className="csr-field">
-              <label className="csr-label">Preferred Time</label>
-              <label className="csr-input-icon-wrap">
-                <input
-                  type="time"
-                  name="serviceTime"
-                  className="csr-input"
-                  value={form.serviceTime}
-                  onChange={handleChange}
-                />
-                <span className="material-symbols-outlined csr-input-icon">schedule</span>
-              </label>
+          ) : (
+            <div className="csr-row">
+              <div className="csr-field">
+                <label className="csr-label">Service Date</label>
+                <label className="csr-input-icon-wrap">
+                  <input
+                    type="date"
+                    name="serviceDate"
+                    className="csr-input"
+                    value={form.serviceDate}
+                    onChange={handleChange}
+                  />
+                  <span className="material-symbols-outlined csr-input-icon">calendar_month</span>
+                </label>
+              </div>
+              <div className="csr-field">
+                <label className="csr-label">Preferred Time</label>
+                <label className="csr-input-icon-wrap">
+                  <input
+                    type="time"
+                    name="serviceTime"
+                    className="csr-input"
+                    value={form.serviceTime}
+                    onChange={handleChange}
+                  />
+                  <span className="material-symbols-outlined csr-input-icon">schedule</span>
+                </label>
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="csr-field">
             <label className="csr-label">Description</label>
@@ -194,7 +234,7 @@ function CreateServiceRequestPage({ onBack }) {
           {error && <p className="csr-error">{error}</p>}
 
           <div className="csr-footer">
-            <button type="button" className="csr-draft-btn" onClick={onBack}>Save Draft</button>
+            <button type="button" className="csr-draft-btn" onClick={goBack}>Save Draft</button>
             <button type="submit" className="csr-submit-btn" disabled={submitting}>
               {submitting ? 'Submitting…' : 'Submit Request'}
             </button>

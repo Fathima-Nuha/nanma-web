@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import './ServicesPage.css'
-import CreateServiceRequestPage from './CreateServiceRequestPage'
 
 const SERVICE_ICON_MAP = {
   Internet_Service: 'wifi',
@@ -73,15 +73,10 @@ function mapCommunityRequest(r) {
   }
 }
 
-const HISTORY = [
-  { id: 1, date: 'SEPT 12, 2023', title: 'Leak Repair', desc: 'The kitchen faucet was dripping since morning….', icon: 'plumbing' },
-  { id: 2, date: 'AUG 28, 2023', title: 'Fuse Replacement', desc: 'Main living area lights were flickering. Fuse unit replace…', icon: 'bolt' },
-  { id: 3, date: 'AUG 15, 2023', title: 'Terrace Pruning', desc: 'Seasonal landscaping for the private terrace garden…', icon: 'yard' },
-]
-
 function ServicesPage() {
-  const [view, setView] = useState('list')
-  const [tab, setTab] = useState('personal')
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const [tab, setTab] = useState(searchParams.get('tab') === 'community' ? 'community' : 'personal')
   const [search, setSearch] = useState('')
   const [personalRequests, setPersonalRequests] = useState([])
   const [communityRequests, setCommunityRequests] = useState([])
@@ -134,10 +129,6 @@ function ServicesPage() {
 
   const requests = tab === 'personal' ? personalRequests : communityRequests
 
-  if (view === 'create') {
-    return <CreateServiceRequestPage onBack={() => setView('list')} />
-  }
-  
   const filtered = requests.filter(r =>
     r.title.toLowerCase().includes(search.toLowerCase()) ||
     r.details.toLowerCase().includes(search.toLowerCase())
@@ -163,7 +154,7 @@ function ServicesPage() {
                 onChange={e => setSearch(e.target.value)}
               />
             </div>
-            <button type="button" className="svc-create-btn" onClick={() => setView('create')}>
+            <button type="button" className="svc-create-btn" onClick={() => navigate(tab === 'community' ? '/user/services/create-community' : '/user/services/create')}>
               <span className="material-symbols-outlined">add</span>
               Create New Request
             </button>
@@ -228,24 +219,6 @@ function ServicesPage() {
           </div>
         </div>
 
-        {/* History & Archive */}
-        <div className="svc-history">
-          <h2 className="svc-history-title">History &amp; Archive</h2>
-          <div className="svc-history-grid">
-            {HISTORY.map(h => (
-              <div key={h.id} className="svc-history-card">
-                <div className="svc-history-top">
-                  <span className="svc-history-date">{h.date}</span>
-                  <div className="svc-history-icon">
-                    <span className="material-symbols-outlined">{h.icon}</span>
-                  </div>
-                </div>
-                <span className="svc-history-name">{h.title}</span>
-                <span className="svc-history-desc">{h.desc}</span>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
 
       {/* Right Panel */}
@@ -262,19 +235,19 @@ function ServicesPage() {
           <h3 className="svc-activity-title">Activity Summary</h3>
           <div className="svc-activity-row">
             <span className="svc-activity-label">Total Requests</span>
-            <span className="svc-activity-value">42</span>
+            <span className="svc-activity-value">{requests.length}</span>
           </div>
           <div className="svc-activity-bar">
-            <div className="svc-activity-bar-fill" style={{ width: '72%' }} />
+            <div className="svc-activity-bar-fill" style={{ width: requests.length ? `${Math.round((requests.filter(r => r.statusClass === 'completed').length / requests.length) * 100)}%` : '0%' }} />
           </div>
           <div className="svc-activity-stats">
             <div className="svc-activity-stat">
               <span className="svc-activity-stat-label">ACTIVE</span>
-              <span className="svc-activity-stat-num">12</span>
+              <span className="svc-activity-stat-num">{requests.filter(r => r.statusClass !== 'completed').length}</span>
             </div>
             <div className="svc-activity-stat">
               <span className="svc-activity-stat-label">COMPLETED</span>
-              <span className="svc-activity-stat-num">30</span>
+              <span className="svc-activity-stat-num">{requests.filter(r => r.statusClass === 'completed').length}</span>
             </div>
           </div>
         </div>
