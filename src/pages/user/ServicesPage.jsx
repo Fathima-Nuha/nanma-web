@@ -224,11 +224,11 @@ function ServicesPage() {
       {/* Right Panel */}
       <aside className="svc-right">
         {/* Featured Upgrade */}
-        <div className="svc-featured">
+        {/* <div className="svc-featured">
           <span className="svc-featured-label">Featured Upgrade</span>
           <h3 className="svc-featured-title">Professional Concierge Valet Service</h3>
           <button type="button" className="svc-featured-btn">Learn More</button>
-        </div>
+        </div> */}
 
         {/* Activity Summary */}
         <div className="svc-activity">
