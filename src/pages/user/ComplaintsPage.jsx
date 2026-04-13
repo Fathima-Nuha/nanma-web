@@ -147,10 +147,10 @@ function ComplaintsPage() {
               <p className="cmp-card-desc">{c.description}</p>
               <div className="cmp-card-footer">
                 <span className="cmp-card-date">
-                  <span className="material-symbols-outlined">calendar_month</span>
+                  <span className="material-symbols-outlined">calendar_today</span>
                   {c.date}
                 </span>
-                <button type="button" className="cmp-card-action">
+                <button type="button" className="cmp-card-action" onClick={() => navigate(`/user/complaints/${c.id}`)}>
                   {c.statusClass === 'completed' || c.statusClass === 'closed' ? 'REVIEW' : 'DETAILS'}
                   <span className="material-symbols-outlined">chevron_right</span>
                 </button>
@@ -161,13 +161,17 @@ function ComplaintsPage() {
           {/* Have another concern card */}
           {filtered.length === 0 && !loading && !error ? (
             <div className="cmp-card cmp-concern-card">
-              <span className="material-symbols-outlined cmp-concern-icon">note_alt</span>
+              <div className="cmp-concern-icon-wrap">
+                <span className="material-symbols-outlined cmp-concern-icon">post_add</span>
+              </div>
               <h3 className="cmp-concern-title">No complaints found.</h3>
               <p className="cmp-concern-text">You have no {filter !== 'all' ? filter : ''} complaints at the moment.</p>
             </div>
           ) : (
             <div className="cmp-card cmp-concern-card">
-              <span className="material-symbols-outlined cmp-concern-icon">note_alt</span>
+              <div className="cmp-concern-icon-wrap">
+                <span className="material-symbols-outlined cmp-concern-icon">post_add</span>
+              </div>
               <h3 className="cmp-concern-title">Have another concern?</h3>
               <p className="cmp-concern-text">Our concierge team is available 24/7 to address any living discomfort.</p>
             </div>

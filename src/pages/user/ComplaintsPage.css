@@ -1,7 +1,7 @@
 .cmp-page {
-  padding: 36px 40px;
+  padding: 40px 48px 80px;
   font-family: 'Inter', sans-serif;
-  max-width: 1000px;
+  max-width: 1200px;
 }
 
 /* ── Header ── */
@@ -14,10 +14,13 @@
 }
 
 .cmp-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #1a1a18;
-  margin: 0 0 10px 0;
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #1b1c19;
+  margin: 0 0 12px 0;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
 .cmp-subtitle {
@@ -31,22 +34,29 @@
 .cmp-file-btn {
   display: flex;
   align-items: center;
-  gap: 6px;
-  background: #c9b96e;
+  gap: 8px;
+  background: linear-gradient(135deg, #6e5c37, #c1aa7f);
   color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 11px 18px;
-  font-size: 0.85rem;
-  font-weight: 600;
+  border-radius: 9999px;
+  padding: 14px 28px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Manrope', 'Inter', sans-serif;
   cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: background 0.15s;
+  box-shadow: 0 4px 16px rgba(110, 92, 55, 0.25);
+  transition: opacity 0.15s, transform 0.15s;
 }
 
 .cmp-file-btn:hover {
-  background: #b8a55e;
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.cmp-file-btn:active {
+  transform: scale(0.98);
 }
 
 .cmp-file-btn .material-symbols-outlined {
@@ -58,38 +68,41 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #f5f4f0;
-  border-radius: 12px;
-  padding: 10px 14px;
-  margin-bottom: 24px;
+  background: #f0eee9;
+  border-radius: 24px;
+  padding: 20px 28px;
+  margin-bottom: 40px;
   gap: 16px;
 }
 
 .cmp-filter-tabs {
   display: flex;
-  gap: 4px;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .cmp-filter-tab {
   background: none;
   border: none;
-  border-radius: 20px;
-  padding: 6px 16px;
+  border-radius: 9999px;
+  padding: 8px 20px;
   font-size: 0.82rem;
   font-weight: 500;
-  color: #777;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  color: #7e766a;
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
 }
 
 .cmp-filter-tab.active {
-  background: #c9b96e;
-  color: #fff;
-  font-weight: 600;
+  background: #f9dfb1;
+  color: #4e3e1c;
+  font-weight: 700;
+  box-shadow: 0 1px 4px rgba(110, 92, 55, 0.12);
 }
 
 .cmp-filter-tab:not(.active):hover {
-  background: #eae9e4;
+  background: #eae8e3;
   color: #333;
 }
 
@@ -98,8 +111,9 @@
   align-items: center;
   gap: 6px;
   font-size: 0.8rem;
-  color: #888;
+  color: #7e766a;
   white-space: nowrap;
+  font-family: 'Manrope', 'Inter', sans-serif;
 }
 
 .cmp-sort-label {
@@ -113,8 +127,9 @@
   background: none;
   border: none;
   font-size: 0.82rem;
-  font-weight: 600;
-  color: #444;
+  font-weight: 700;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  color: #6e5c37;
   cursor: pointer;
   padding: 0;
 }
@@ -127,84 +142,100 @@
 .cmp-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 28px;
 }
 
 /* ── Card ── */
 .cmp-card {
   background: #fff;
-  border-radius: 14px;
-  padding: 20px;
+  border-radius: 24px;
+  padding: 28px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  min-height: 180px;
-  border: 1px solid #eeede8;
+  border: 1px solid transparent;
+  box-shadow: 0 4px 20px rgba(27, 28, 25, 0.03);
+  transition: box-shadow 0.3s, border-color 0.3s;
+  cursor: pointer;
+}
+
+.cmp-card:hover {
+  box-shadow: 0 12px 32px rgba(27, 28, 25, 0.07);
+  border-color: rgba(207, 197, 183, 0.18);
 }
 
 .cmp-card-top {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  margin-bottom: 20px;
 }
 
 .cmp-card-id {
-  font-size: 0.75rem;
-  color: #aaa;
-  font-weight: 500;
-  letter-spacing: 0.04em;
+  font-size: 0.65rem;
+  color: #7e766a;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-family: 'Manrope', 'Inter', sans-serif;
 }
 
 .cmp-badge {
   display: inline-block;
   padding: 3px 10px;
-  border-radius: 20px;
-  font-size: 0.68rem;
+  border-radius: 4px;
+  font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  font-family: 'Manrope', 'Inter', sans-serif;
 }
 
 .cmp-badge.new {
-  background: #edf7ed;
+  background: #e8f5e9;
   color: #2e7d32;
 }
 
 .cmp-badge.pending {
-  background: #fff4e5;
-  color: #c97a1a;
+  background: #f9dfb1;
+  color: #4e3e1c;
 }
 
 .cmp-badge.inprogress {
-  background: #fff4e5;
-  color: #c97a1a;
+  background: #f9dfb1;
+  color: #4e3e1c;
 }
 
 .cmp-badge.completed {
-  background: #f0ede4;
-  color: #7a6e4e;
+  background: #e4e2dd;
+  color: #7e766a;
 }
 
 .cmp-badge.closed {
-  background: #f0f0f0;
-  color: #616161;
+  background: #e4e2dd;
+  color: #7e766a;
 }
 
 .cmp-card-title {
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 700;
-  color: #1a1a18;
-  margin: 0;
+  color: #1b1c19;
+  margin: 0 0 8px 0;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  transition: color 0.2s;
+}
+
+.cmp-card:hover .cmp-card-title {
+  color: #6e5c37;
 }
 
 .cmp-card-desc {
-  font-size: 0.8rem;
-  color: #888;
-  line-height: 1.55;
-  margin: 0;
+  font-size: 0.82rem;
+  color: #7e766a;
+  line-height: 1.6;
+  margin: 0 0 28px 0;
   flex: 1;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -213,19 +244,24 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 4px;
+  padding-top: 20px;
+  border-top: 1px solid #f0eee9;
+  margin-top: auto;
 }
 
 .cmp-card-date {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   font-size: 0.75rem;
-  color: #aaa;
+  font-weight: 600;
+  color: #7e766a;
+  font-family: 'Manrope', 'Inter', sans-serif;
 }
 
 .cmp-card-date .material-symbols-outlined {
-  font-size: 14px;
+  font-size: 16px;
+  color: #c1aa7f;
 }
 
 .cmp-card-action {
@@ -234,21 +270,23 @@
   gap: 2px;
   background: none;
   border: none;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  color: #888;
+  color: #6e5c37;
   cursor: pointer;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'Manrope', 'Inter', sans-serif;
   padding: 0;
-  transition: color 0.15s;
+  transition: opacity 0.15s;
 }
 
 .cmp-card-action:hover {
-  color: #c9b96e;
+  opacity: 0.7;
 }
 
 .cmp-card-action .material-symbols-outlined {
-  font-size: 15px;
+  font-size: 16px;
 }
 
 /* ── Concern Card ── */
@@ -256,17 +294,36 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: #f5f4f0;
-  border: none;
+  background: #eae8e3;
+  border: 2px dashed rgba(207, 197, 183, 0.4) !important;
+  box-shadow: none !important;
+  cursor: pointer;
   gap: 8px;
 }
 
-.cmp-concern-icon {
-  font-size: 36px;
-  color: #bbb;
+.cmp-concern-card:hover {
+  border-color: rgba(193, 170, 127, 0.5) !important;
+}
+
+.cmp-concern-icon-wrap {
+  width: 64px;
+  height: 64px;
   background: #fff;
   border-radius: 50%;
-  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  transition: transform 0.2s;
+}
+
+.cmp-concern-card:hover .cmp-concern-icon-wrap {
+  transform: scale(1.1);
+}
+
+.cmp-concern-icon {
+  font-size: 32px;
+  color: #6e5c37;
 }
 
 .cmp-concern-title {

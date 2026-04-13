@@ -91,6 +91,21 @@ After every meaningful push, add a new entry at the top:
 ## [2026-04-13]
 
 ### Added
+- `ComplaintDetailPage.css` (new file)
+- `ComplaintDetailPage.jsx` (new file)
+- `CreateComplaintPage.css` (new file)
+- `CreateComplaintPage.jsx` (new file)
+
+### Changed
+- `ComplaintsPage.css`
+- `ComplaintsPage.jsx`
+- `AppRouter.jsx`
+
+---
+
+## [2026-04-13]
+
+### Added
 - `ComplaintsPage.css` (new file)
 - `ComplaintsPage.jsx` (new file)
 

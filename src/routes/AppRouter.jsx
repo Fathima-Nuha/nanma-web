@@ -13,6 +13,8 @@ import ServicesPage from '../pages/user/ServicesPage'
 import CreateServiceRequestPage from '../pages/user/CreateServiceRequestPage'
 import CreateCommunityServiceRequestPage from '../pages/user/CreateCommunityServiceRequestPage'
 import ComplaintsPage from '../pages/user/ComplaintsPage'
+import ComplaintDetailPage from '../pages/user/ComplaintDetailPage'
+import CreateComplaintPage from '../pages/user/CreateComplaintPage'
 import DashboardPage from '../pages/admin/DashboardPage'
 import ApartmentGroupPage from '../pages/admin/ApartmentGroupPage'
 
@@ -35,6 +37,8 @@ function AppRouter() {
         <Route path="/user/services/create" element={<CreateServiceRequestPage />} />
         <Route path="/user/services/create-community" element={<CreateCommunityServiceRequestPage />} />
         <Route path="/user/complaints" element={<ComplaintsPage />} />
+        <Route path="/user/complaints/create" element={<CreateComplaintPage />} />
+        <Route path="/user/complaints/:id" element={<ComplaintDetailPage />} />
       </Route>
 
       <Route path="/admin/dashboard" element={<DashboardPage />} />
