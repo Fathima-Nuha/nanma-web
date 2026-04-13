@@ -1,0 +1,292 @@
+.cmp-page {
+  padding: 36px 40px;
+  font-family: 'Inter', sans-serif;
+  max-width: 1000px;
+}
+
+/* ── Header ── */
+.cmp-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.cmp-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a18;
+  margin: 0 0 10px 0;
+}
+
+.cmp-subtitle {
+  font-size: 0.83rem;
+  color: #777;
+  max-width: 460px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.cmp-file-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #c9b96e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 18px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.cmp-file-btn:hover {
+  background: #b8a55e;
+}
+
+.cmp-file-btn .material-symbols-outlined {
+  font-size: 18px;
+}
+
+/* ── Filters ── */
+.cmp-filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f5f4f0;
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.cmp-filter-tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.cmp-filter-tab {
+  background: none;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #777;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.cmp-filter-tab.active {
+  background: #c9b96e;
+  color: #fff;
+  font-weight: 600;
+}
+
+.cmp-filter-tab:not(.active):hover {
+  background: #eae9e4;
+  color: #333;
+}
+
+.cmp-sort {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: #888;
+  white-space: nowrap;
+}
+
+.cmp-sort-label {
+  color: #aaa;
+}
+
+.cmp-sort-btn {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #444;
+  cursor: pointer;
+  padding: 0;
+}
+
+.cmp-sort-btn .material-symbols-outlined {
+  font-size: 16px;
+}
+
+/* ── Grid ── */
+.cmp-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* ── Card ── */
+.cmp-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 180px;
+  border: 1px solid #eeede8;
+}
+
+.cmp-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cmp-card-id {
+  font-size: 0.75rem;
+  color: #aaa;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.cmp-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.cmp-badge.new {
+  background: #edf7ed;
+  color: #2e7d32;
+}
+
+.cmp-badge.pending {
+  background: #fff4e5;
+  color: #c97a1a;
+}
+
+.cmp-badge.inprogress {
+  background: #fff4e5;
+  color: #c97a1a;
+}
+
+.cmp-badge.completed {
+  background: #f0ede4;
+  color: #7a6e4e;
+}
+
+.cmp-badge.closed {
+  background: #f0f0f0;
+  color: #616161;
+}
+
+.cmp-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a18;
+  margin: 0;
+}
+
+.cmp-card-desc {
+  font-size: 0.8rem;
+  color: #888;
+  line-height: 1.55;
+  margin: 0;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cmp-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.cmp-card-date {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  color: #aaa;
+}
+
+.cmp-card-date .material-symbols-outlined {
+  font-size: 14px;
+}
+
+.cmp-card-action {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #888;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  padding: 0;
+  transition: color 0.15s;
+}
+
+.cmp-card-action:hover {
+  color: #c9b96e;
+}
+
+.cmp-card-action .material-symbols-outlined {
+  font-size: 15px;
+}
+
+/* ── Concern Card ── */
+.cmp-concern-card {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #f5f4f0;
+  border: none;
+  gap: 8px;
+}
+
+.cmp-concern-icon {
+  font-size: 36px;
+  color: #bbb;
+  background: #fff;
+  border-radius: 50%;
+  padding: 12px;
+}
+
+.cmp-concern-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #444;
+  margin: 0;
+}
+
+.cmp-concern-text {
+  font-size: 0.78rem;
+  color: #999;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── Empty ── */
+.cmp-empty {
+  color: #aaa;
+  font-size: 0.88rem;
+  padding: 32px 0;
+  text-align: center;
+}

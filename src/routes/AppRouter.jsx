@@ -12,6 +12,7 @@ import UserDashboardPage from '../pages/user/UserDashboardPage'
 import ServicesPage from '../pages/user/ServicesPage'
 import CreateServiceRequestPage from '../pages/user/CreateServiceRequestPage'
 import CreateCommunityServiceRequestPage from '../pages/user/CreateCommunityServiceRequestPage'
+import ComplaintsPage from '../pages/user/ComplaintsPage'
 import DashboardPage from '../pages/admin/DashboardPage'
 import ApartmentGroupPage from '../pages/admin/ApartmentGroupPage'
 
@@ -33,6 +34,7 @@ function AppRouter() {
         <Route path="/user/services" element={<ServicesPage />} />
         <Route path="/user/services/create" element={<CreateServiceRequestPage />} />
         <Route path="/user/services/create-community" element={<CreateCommunityServiceRequestPage />} />
+        <Route path="/user/complaints" element={<ComplaintsPage />} />
       </Route>
 
       <Route path="/admin/dashboard" element={<DashboardPage />} />

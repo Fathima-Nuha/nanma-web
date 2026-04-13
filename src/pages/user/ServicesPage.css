@@ -72,6 +72,15 @@
   color: #bbb;
 }
 
+.svc-search-count {
+  font-size: 0.75rem;
+  color: #888;
+  white-space: nowrap;
+  border-left: 1px solid #ddd;
+  padding-left: 8px;
+}
+
+
 .svc-create-btn {
   display: flex;
   align-items: center;
@@ -246,6 +255,16 @@
 .svc-status-badge.new {
   background: #e8f4fd;
   color: #1565c0;
+}
+
+.svc-status-badge.pending {
+  background: #fff8e1;
+  color: #f57f17;
+}
+
+.svc-status-badge.closed {
+  background: #f0f0f0;
+  color: #616161;
 }
 
 .svc-row-actions {

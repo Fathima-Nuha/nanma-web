@@ -19,7 +19,10 @@ const STATUS_MAP = {
   new: { label: 'NEW', cls: 'new' },
   in_progress: { label: 'IN PROGRESS', cls: 'inprogress' },
   inprogress: { label: 'IN PROGRESS', cls: 'inprogress' },
+  pending: { label: 'PENDING', cls: 'pending' },
   completed: { label: 'COMPLETED', cls: 'completed' },
+  complete: { label: 'COMPLETE', cls: 'completed' },
+  closed: { label: 'CLOSED', cls: 'closed' },
 }
 
 function formatDate(dateStr, timeStr) {
@@ -153,6 +156,9 @@ function ServicesPage() {
                 value={search}
                 onChange={e => setSearch(e.target.value)}
               />
+              {search && (
+                <span className="svc-search-count">{filtered.length} result{filtered.length !== 1 ? 's' : ''}</span>
+              )}
             </div>
             <button type="button" className="svc-create-btn" onClick={() => navigate(tab === 'community' ? '/user/services/create-community' : '/user/services/create')}>
               <span className="material-symbols-outlined">add</span>
@@ -223,12 +229,7 @@ function ServicesPage() {
 
       {/* Right Panel */}
       <aside className="svc-right">
-        {/* Featured Upgrade */}
-        {/* <div className="svc-featured">
-          <span className="svc-featured-label">Featured Upgrade</span>
-          <h3 className="svc-featured-title">Professional Concierge Valet Service</h3>
-          <button type="button" className="svc-featured-btn">Learn More</button>
-        </div> */}
+        
 
         {/* Activity Summary */}
         <div className="svc-activity">
@@ -238,16 +239,16 @@ function ServicesPage() {
             <span className="svc-activity-value">{requests.length}</span>
           </div>
           <div className="svc-activity-bar">
-            <div className="svc-activity-bar-fill" style={{ width: requests.length ? `${Math.round((requests.filter(r => r.statusClass === 'completed').length / requests.length) * 100)}%` : '0%' }} />
+            <div className="svc-activity-bar-fill" style={{ width: requests.length ? `${Math.round((requests.filter(r => r.statusClass === 'completed' || r.statusClass === 'closed').length / requests.length) * 100)}%` : '0%' }} />
           </div>
           <div className="svc-activity-stats">
             <div className="svc-activity-stat">
               <span className="svc-activity-stat-label">ACTIVE</span>
-              <span className="svc-activity-stat-num">{requests.filter(r => r.statusClass !== 'completed').length}</span>
+              <span className="svc-activity-stat-num">{requests.filter(r => r.statusClass !== 'completed' && r.statusClass !== 'closed').length}</span>
             </div>
             <div className="svc-activity-stat">
               <span className="svc-activity-stat-label">COMPLETED</span>
-              <span className="svc-activity-stat-num">{requests.filter(r => r.statusClass === 'completed').length}</span>
+              <span className="svc-activity-stat-num">{requests.filter(r => r.statusClass === 'completed' || r.statusClass === 'closed').length}</span>
             </div>
           </div>
         </div>
