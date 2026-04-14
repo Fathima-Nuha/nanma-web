@@ -88,103 +88,93 @@ After every meaningful push, add a new entry at the top:
 
 ---
 
-## [2026-04-13]
+## [2026-04-14] — Complaints Module Complete
 
 ### Added
-- `ComplaintDetailPage.css` (new file)
-- `ComplaintDetailPage.jsx` (new file)
-- `CreateComplaintPage.css` (new file)
-- `CreateComplaintPage.jsx` (new file)
+- `ComplaintDetailPage.jsx / .css` — complaint detail view with:
+  - Status badge (NEW / PENDING / COMPLETED / CLOSED) mapped from `complaint_status_id`
+  - Timeline steps: Complaint Filed → Assigned to Maintenance → In Progress
+  - Image attachment with tap-to-zoom overlay
+  - `POST /api/v1/get_complaint` with `{ flat_id, complaint_id }` payload
+- `CreateComplaintPage.jsx / .css` — create complaint form with:
+  - Quick-select topic chips (Plumbing, Electrical, HVAC, Cleaning, Security, Pest Control)
+  - Free-text description
+  - Drag-and-drop image upload with preview
+  - `POST /api/v1/create_complaint` via `FormData` (includes `complaint_image`)
+- `ComplaintsPage.jsx / .css` — complaints list with:
+  - Filter tabs: All / New / In Progress / Completed
+  - Sort toggle (latest / oldest)
+  - Status counts display
+  - `POST /api/v1/search_get_complaints?building_id=&flat_id=`
+  - Tap card → navigates to `/user/complaints/:id`
 
 ### Changed
-- `ComplaintsPage.css`
-- `ComplaintsPage.jsx`
+- `AppRouter.jsx` — added `/user/complaints`, `/user/complaints/create`, `/user/complaints/:id` routes
+
+---
+
+## [2026-04-13] — Services Module Complete
+
+### Added
+- `ServicesPage.jsx / .css` — services list with two tabs: Personal and Community
+  - Personal: mapped from `personal_service_request_id`, icon by service type
+  - Community: mapped from `service_id`, status from `status_id`
+  - `POST /api/v1/get_personal_service_requests` and `get_community_service_requests`
+- `CreateServiceRequestPage.jsx / .css` — personal service request form with:
+  - Vendor dropdown (`POST /api/v1/service_vendors_in_a_building`)
+  - Auto-fills service type, date/time picker, no-of-pieces field for laundry
+  - `POST /api/v1/create_service_request`
+- `CreateCommunityServiceRequestPage.jsx` — community service request form with:
+  - Service dropdown (`POST /api/v1/get_admin_services`)
+  - Auto-fills service charge, date/time picker
+  - `POST /api/v1/create_community_service_request`
+- `UserLayout.jsx` — shared sidebar + top bar shell wrapping all `/user/*` routes
+  - Sidebar nav with 17 items; Services and Complaints are active links
+  - Shows `user_name`, `selected_apartment_number`, `selected_building_name` from localStorage
+
+### Changed
+- `UserDashboardPage.jsx` — full dashboard: spotlight carousel, quick services grid (8 tiles), events section, visitors section, all-services drawer
+- `UserDashboardPage.css` — layout polish, sidebar, topbar, cards
+- `AppRouter.jsx` — user routes wrapped under `<UserLayout>` outlet
+
+---
+
+## [2026-04-11] — User Dashboard + Service Request Forms
+
+### Added
+- `CreateServiceRequestPage.jsx / .css` (initial scaffold)
+- `CreateCommunityServiceRequestPage.jsx` (community service form)
+- `components/` folder created for shared UI components
+
+### Changed
+- `SelectApartmentPage.jsx` — stores `selected_apartment_id`, `selected_building_id`, `selected_building_name` in localStorage; navigates to `/user/dashboard`
+- `ServicesPage.jsx` — wired up API, added community tab
+- `UserDashboardPage.jsx` — service tile navigation
 - `AppRouter.jsx`
 
 ---
 
-## [2026-04-13]
+## [2026-04-10] — Services Page + MpinVerify Fix
 
 ### Added
-- `ComplaintsPage.css` (new file)
-- `ComplaintsPage.jsx` (new file)
+- `ServicesPage.jsx / .css` — services landing page (initial)
 
 ### Changed
-- `UserLayout.jsx`
-- `ServicesPage.css`
-- `ServicesPage.jsx`
+- `MpinVerifyPage.jsx` — fixed navigation to use `state` when passing `appartment_details`
+- `UserDashboardPage.jsx / .css`
+
+---
+
+## [2026-04-09] — Select Apartment + Dashboard Shell
+
+### Added
+- `PortalSelectPage.css`
+- `SelectApartmentPage.css`
 - `UserDashboardPage.css`
-- `UserDashboardPage.jsx`
-- `AppRouter.jsx`
-
----
-
-## [2026-04-13]
+- `UserSetupPage.jsx` — router helper: renders `SelectApartmentPage` or `AddFlatPage` based on `hasApartment` state
 
 ### Changed
-- `ServicesPage.jsx`
-- `UserDashboardPage.css`
-
----
-
-## [2026-04-11]
-
-### Added
-- `components` (new file)
-- `CreateCommunityServiceRequestPage.jsx` (new file)
-
-### Changed
-- `CreateServiceRequestPage.jsx`
-- `ServicesPage.jsx`
-- `UserDashboardPage.jsx`
-- `AppRouter.jsx`
-
----
-
-## [2026-04-11]
-
-### Added
-- `CreateServiceRequestPage.css` (new file)
-- `CreateServiceRequestPage.jsx` (new file)
-
-### Changed
-- `SelectApartmentPage.jsx`
-- `ServicesPage.css`
-- `ServicesPage.jsx`
-
----
-
-## [2026-04-10]
-
-### Added
-- `ServicesPage.css` (new file)
-- `ServicesPage.jsx` (new file)
-
-### Changed
-- `MpinVerifyPage.jsx`
-- `UserDashboardPage.css`
-- `UserDashboardPage.jsx`
-
----
-
-## [2026-04-09]
-
-### Changed
-- `UserDashboardPage.css`
-- `UserDashboardPage.jsx`
-
----
-
-## [2026-04-09]
-
-### Added
-- `PortalSelectPage.css` (new file)
-- `SelectApartmentPage.css` (new file)
-- `UserDashboardPage.css` (new file)
-- `UserSetupPage.jsx` (new file)
-
-### Changed
-- `MpinVerifyPage.jsx`
+- `MpinVerifyPage.jsx` — navigates to `/user-setup` passing `hasApartment` + `appartment_details`
 - `PortalSelectPage.jsx`
 - `SelectApartmentPage.jsx`
 - `UserDashboardPage.jsx`
