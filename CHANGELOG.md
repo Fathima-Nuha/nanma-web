@@ -7,6 +7,14 @@ Format: `[Date] — What changed | Why / Notes`
 
 ## [2026-04-14]
 
+### Changed
+- `UtilityScanPage.css`
+- `UtilityScanPage.jsx`
+
+---
+
+## [2026-04-14]
+
 ### Added
 - `EditComplaintPage.jsx` (new file)
 - `UtilityScanPage.css` (new file)

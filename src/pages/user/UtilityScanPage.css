@@ -8,6 +8,7 @@
   background: #fbf9f4;
   min-height: 100%;
   max-width: 1280px;
+  width: 100%;
 }
 
 /* ── Header ── */
@@ -517,6 +518,15 @@
   cursor: not-allowed;
 }
 
+.us-pay-now-btn {
+  background: linear-gradient(135deg, #1a7f4b, #2ecc71);
+  box-shadow: 0 8px 24px rgba(26, 127, 75, 0.28);
+}
+
+.us-pay-now-btn:hover {
+  transform: scale(1.02);
+}
+
 @keyframes us-btn-spin {
   to { transform: rotate(360deg); }
 }
@@ -540,6 +550,91 @@
 
 .us-feedback.success { color: #2e7d32; }
 .us-feedback.error   { color: #ba1a1a; }
+
+/* ── Detail loading bar ── */
+.us-detail-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #f5f3ee;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  color: #6e5c37;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* ── Already submitted / info banner ── */
+.us-submitted-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #f0fdf4;
+  border: 1px solid rgba(46, 125, 50, 0.2);
+  border-radius: 10px;
+  font-size: 0.8rem;
+  color: #2e7d32;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.us-submitted-banner.warn {
+  background: #fffbeb;
+  border-color: rgba(234, 179, 8, 0.3);
+  color: #92400e;
+}
+
+.us-submitted-banner .material-symbols-outlined {
+  font-size: 18px;
+  flex-shrink: 0;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+}
+
+/* ── No active bill panel ── */
+.us-no-bill {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 24px;
+  background: #fdf2f2;
+  border: 1px solid rgba(186, 26, 26, 0.15);
+  border-radius: 12px;
+  margin-bottom: 24px;
+}
+
+.us-no-bill-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(186, 26, 26, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.us-no-bill-icon .material-symbols-outlined {
+  font-size: 20px;
+  color: #ba1a1a;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+}
+
+.us-no-bill-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  color: #ba1a1a;
+  margin: 0 0 4px;
+}
+
+.us-no-bill-sub {
+  font-size: 0.78rem;
+  color: #7e766a;
+  margin: 0;
+  line-height: 1.55;
+}
 
 /* ── Right column ── */
 .us-sidebar {
@@ -730,7 +825,289 @@
 .ec-wrap {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 24px;
+  max-width: 760px;
+}
+
+/* ── Header card ── */
+.ec-bills-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 32px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.ec-bills-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  color: #1b1c19;
+  margin: 0 0 6px;
+  letter-spacing: -0.02em;
+}
+
+.ec-bills-subtitle {
+  font-size: 0.8rem;
+  color: #7e766a;
+  margin: 0;
+  line-height: 1.6;
+  max-width: 420px;
+}
+
+.ec-bills-header-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #c1aa7f, #6e5c37);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ec-bills-header-icon-wrap .material-symbols-outlined {
+  font-size: 26px;
+  color: #fff;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ── State panels (loading / empty / error) ── */
+.ec-state-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  gap: 12px;
+  text-align: center;
+}
+
+@keyframes ec-spin {
+  to { transform: rotate(360deg); }
+}
+
+.ec-loading-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #e4e2dd;
+  border-top-color: #6e5c37;
+  border-radius: 50%;
+  animation: ec-spin 0.8s linear infinite;
+  margin-bottom: 6px;
+}
+
+.ec-state-icon {
+  font-size: 52px;
+  color: #c1aa7f;
+  font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
+
+.ec-state-icon.error { color: #ba1a1a; }
+
+.ec-state-text {
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  color: #1b1c19;
+  margin: 0;
+}
+
+.ec-state-sub {
+  font-size: 0.8rem;
+  color: #7e766a;
+  margin: 0;
+  max-width: 320px;
+  line-height: 1.6;
+}
+
+/* ── Bills list ── */
+.ec-bills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Column header — spacer matches icon width so "Billing Period"
+   label aligns with the period text in each row */
+.ec-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px 12px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(76, 70, 59, 0.4);
+}
+
+.ec-list-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Matches ec-list-row-icon width so text columns line up */
+.ec-list-header-spacer {
+  width: 44px;
+  flex-shrink: 0;
+}
+
+.ec-list-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ec-list-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 32px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  transition: background 0.18s, box-shadow 0.18s;
+}
+
+.ec-list-row:hover {
+  background: #f9f8f5;
+  box-shadow: 0 4px 16px rgba(27, 28, 25, 0.07);
+}
+
+/* Left flex group: icon + period text */
+.ec-list-row-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+}
+
+.ec-list-row-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #f0eee9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.18s;
+}
+
+.ec-list-row:hover .ec-list-row-icon {
+  background: #e8e5df;
+}
+
+.ec-list-row-icon .material-symbols-outlined {
+  font-size: 20px;
+  color: #6e5c37;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.ec-list-period {
+  min-width: 0;
+}
+
+.ec-list-period-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  color: #1b1c19;
+  margin: 0 0 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ec-list-period-sub {
+  font-size: 0.75rem;
+  color: #7e766a;
+  margin: 0;
+}
+
+/* View Bill button */
+.ec-list-view-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 22px;
+  border: 1.5px solid rgba(110, 92, 55, 0.3);
+  border-radius: 9999px;
+  background: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  letter-spacing: 0.05em;
+  color: #6e5c37;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.ec-list-view-btn .material-symbols-outlined {
+  font-size: 15px;
+  transition: transform 0.18s;
+}
+
+.ec-list-view-btn:hover {
+  background: #6e5c37;
+  border-color: #6e5c37;
+  color: #fff;
+}
+
+.ec-list-view-btn:hover .material-symbols-outlined {
+  transform: translateX(2px);
+}
+
+/* ── Lightbox ── */
+.ec-lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ec-lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.ec-lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.ec-lightbox-close .material-symbols-outlined {
+  font-size: 22px;
+}
+
+.ec-lightbox-img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
 /* ── Header card ── */

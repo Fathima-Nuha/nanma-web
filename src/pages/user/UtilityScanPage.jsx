@@ -24,13 +24,16 @@ const GAS_CONFIG = {
   rateAmount: '₹ 48.50',
   rateUnit: 'per SCM unit',
   rateNote: '*Rates are subject to municipal adjustments.',
-  previousReading: '1,240.50',
+  previousReading: '0',
   utilityType: 'gas',
   rateChipIcon: 'local_fire_department',
   ratePerUnit: 48.5,
   editorialTag: 'Sustainable Living',
   editorialTitle: 'Architecture of Responsibility',
   editorialImg: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
+  detailApi: '/api/v1/get_gas_utility_detail',
+  statusApi: '/api/v1/get_gas_utility_status',
+  submitApi: '/api/v1/add_current_reading',
 }
 
 const WATER_CONFIG = {
@@ -46,6 +49,9 @@ const WATER_CONFIG = {
   editorialTag: 'Water Conservation',
   editorialTitle: 'Every Drop Counts',
   editorialImg: 'https://images.unsplash.com/photo-1482938289607-e9573fc25ebb?w=600&q=80',
+  statusApi: '/api/v1/water_utility_status',
+  detailApi: '/api/v1/get_water_generated_entries',
+  submitApi: '/api/v1/request_to_verify_water',
 }
 
 const GUIDELINES = [
@@ -137,25 +143,34 @@ function ElectricityTab() {
       {!loading && !error && bills.length > 0 && (
         <div className="ec-bills-list">
           <div className="ec-list-header">
-            <span>Billing Period</span>
+            <div className="ec-list-header-left">
+              <div className="ec-list-header-spacer" />
+              <span>Billing Period</span>
+            </div>
             <span>Action</span>
           </div>
           <div className="ec-list-body">
             {bills.map((bill, i) => (
               <div key={bill.id ?? i} className="ec-list-row">
-                <div className="ec-list-period">
-                  <p className="ec-list-period-name">{bill.period ?? '—'}</p>
-                  <p className="ec-list-period-sub">
-                    {bill.uploaded_at
-                      ? `Uploaded on ${new Date(bill.uploaded_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}`
-                      : ''}
-                  </p>
+                <div className="ec-list-row-left">
+                  <div className="ec-list-row-icon">
+                    <span className="material-symbols-outlined">receipt_long</span>
+                  </div>
+                  <div className="ec-list-period">
+                    <p className="ec-list-period-name">{bill.period ?? '—'}</p>
+                    <p className="ec-list-period-sub">
+                      {bill.uploaded_at
+                        ? `Uploaded on ${new Date(bill.uploaded_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}`
+                        : ''}
+                    </p>
+                  </div>
                 </div>
                 <button
                   type="button"
                   className="ec-list-view-btn"
                   onClick={() => setLightboxUrl(bill.bill_image_url)}
                 >
+                  <span className="material-symbols-outlined">open_in_new</span>
                   View Bill
                 </button>
               </div>
@@ -202,22 +217,101 @@ function ComingSoonTab({ label, icon }) {
 
 function UtilityReadingTab({ config }) {
   const [readingValue, setReadingValue] = useState('')
-  const [meterImage, setMeterImage] = useState(null)
+  const [meterImage, setMeterImage]     = useState(null)
   const [meterPreview, setMeterPreview] = useState(null)
-  const [imgLoading, setImgLoading] = useState(false)
-  const [submitting, setSubmitting] = useState(false)
+  const [imgLoading, setImgLoading]     = useState(false)
+  const [submitting, setSubmitting]     = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
-  const [submitError, setSubmitError] = useState(null)
+  const [submitError, setSubmitError]   = useState(null)
   const fileInputRef = useRef(null)
 
-  const prevReading = parseFloat(config.previousReading.replace(/,/g, '')) || 0
-  const currentReading = parseFloat(readingValue) || 0
-  const consumed = currentReading > prevReading ? (currentReading - prevReading).toFixed(2) : null
-  const estimatedBill =
-    consumed !== null
-      ? `₹ ${(parseFloat(consumed) * config.ratePerUnit).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-      : '---'
+  // ── Detail API ──────────────────────────────────
+  const [detailLoading, setDetailLoading] = useState(false)
+  const [detailError, setDetailError]     = useState(null)
+  const [fetchedDetail, setFetchedDetail] = useState(null)
+  const [noBill, setNoBill]               = useState(false)
+  const [billStatus, setBillStatus]       = useState(null)
 
+  useEffect(() => {
+    if (!config.statusApi) return
+    const flatId     = localStorage.getItem('selected_apartment_id')
+    const buildingId = localStorage.getItem('selected_building_id')
+    const token      = localStorage.getItem('access_token')
+    if (!flatId || !buildingId) return
+
+    setDetailLoading(true)
+    setDetailError(null)
+    setNoBill(false)
+    setBillStatus(null)
+
+    const base    = import.meta.env.VITE_API_BASE_URL
+    const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }
+    const common  = { appartment_id: flatId, building_id: buildingId }
+
+    // Step 1 — get status
+    fetch(`${base}${config.statusApi}`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(common),
+    })
+      .then(res => res.json())
+      .then(status => {
+        setBillStatus(status.status)
+        if (status.status === 4) {
+          setNoBill(true)
+          setDetailLoading(false)
+          return
+        }
+
+        // Step 2 — get detail using month/year from status
+        return fetch(`${base}${config.detailApi}`, {
+          method: 'POST',
+          headers,
+          body: JSON.stringify({ ...common, month: status.month, year: status.year }),
+        })
+          .then(res => res.json())
+          .then(data => {
+            setFetchedDetail(data)
+            // gas uses 'current_reading', water uses 'reading'
+            const submittedReading = parseFloat(data.current_reading ?? data.reading ?? 0)
+            if (submittedReading > 0) {
+              setReadingValue(submittedReading.toString())
+            }
+          })
+      })
+      .catch(() => setDetailError('Could not load utility details. Showing defaults.'))
+      .finally(() => setDetailLoading(false))
+  }, [config.statusApi, config.detailApi])
+
+  // ── Derive live values from API or fall back to config ──
+  const prevReading = parseFloat(
+    String(fetchedDetail?.previous_reading ?? config.previousReading).replace(/,/g, '')
+  ) || 0
+
+  const liveRatePerUnit = fetchedDetail?.unit_rate
+    ? parseFloat(fetchedDetail.unit_rate)
+    : config.ratePerUnit
+
+  const liveRateAmount = fetchedDetail?.unit_rate
+    ? `₹ ${parseFloat(fetchedDetail.unit_rate).toFixed(2)}`
+    : config.rateAmount
+
+  const prevReadingDisplay = fetchedDetail?.previous_reading
+    ? parseFloat(fetchedDetail.previous_reading).toLocaleString('en-IN', { maximumFractionDigits: 2 })
+    : config.previousReading
+
+  const alreadySubmitted = billStatus === 1
+
+  // ── Calculations ─────────────────────────────────
+  const currentReading = parseFloat(readingValue) || 0
+  const consumed = currentReading > prevReading
+    ? (currentReading - prevReading).toFixed(2)
+    : null
+  const estimatedBill = consumed !== null
+    ? `₹ ${(parseFloat(consumed) * liveRatePerUnit).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+    : '---'
+
+  // ── File handlers ─────────────────────────────────
   function handleFileSelect(e) {
     const file = e.target.files?.[0]
     if (!file) return
@@ -233,6 +327,7 @@ function UtilityReadingTab({ config }) {
     if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
+  // ── Submit ────────────────────────────────────────
   async function handleSubmit() {
     if (!readingValue) {
       setSubmitError('Please enter the current meter reading.')
@@ -242,29 +337,38 @@ function UtilityReadingTab({ config }) {
       setSubmitError('Current reading must be greater than the previous reading.')
       return
     }
-    const flatId = localStorage.getItem('selected_apartment_id')
-    const buildingId = localStorage.getItem('selected_building_id')
-    const userId = localStorage.getItem('user_id')
     const token = localStorage.getItem('access_token')
+
+    const consumedUnits = consumed !== null ? parseFloat(consumed) : 0
+    const additionalCharge = parseFloat(fetchedDetail?.additional_charge ?? 0)
+    const billAmount = (consumedUnits * liveRatePerUnit + additionalCharge).toFixed(2)
+
     const body = new FormData()
-    body.append('flat_id', flatId)
-    body.append('building_id', buildingId)
-    body.append('user_id', userId)
-    body.append('utility_type', config.utilityType)
     body.append('current_reading', readingValue)
-    if (meterImage) body.append('meter_image', meterImage)
+    body.append('consumed_unit',   consumedUnits.toFixed(2))
+
+    if (config.utilityType === 'gas') {
+      // gas_utility_detail_id (singular) is what the submit API expects
+      body.append('gas_utility_detail_id', fetchedDetail?.gas_utility_details_id ?? '')
+      body.append('current_bill_amount',   billAmount)
+      if (meterImage) body.append('image', meterImage)
+    } else if (config.utilityType === 'water') {
+      body.append('water_utility_details_id', fetchedDetail?.water_utility_details_id ?? '')
+      body.append('total_amount', billAmount)
+      if (meterImage) body.append('bill_image', meterImage)
+    }
+
     setSubmitting(true)
     setSubmitError(null)
     setSubmitSuccess(false)
     try {
-      const res = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}/api/v1/submit_utility_reading`,
+      const res  = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}${config.submitApi}`,
         { method: 'POST', headers: { Authorization: `Bearer ${token}` }, body }
       )
       const data = await res.json()
       if (!res.ok) throw new Error(data.message || 'Submission failed.')
       setSubmitSuccess(true)
-      setReadingValue('')
       handleRemoveImage()
     } catch (err) {
       setSubmitError(err.message || 'Something went wrong. Please try again.')
@@ -279,7 +383,44 @@ function UtilityReadingTab({ config }) {
     <div className="us-grid">
       <div>
         <div className="us-card">
-          <div className="us-card-period">
+          {/* Detail loading overlay */}
+          {detailLoading && (
+            <div className="us-detail-loading">
+              <div className="us-btn-spinner" style={{ width: 22, height: 22, borderColor: 'rgba(110,92,55,0.2)', borderTopColor: '#6e5c37' }} />
+              <span>Loading utility details…</span>
+            </div>
+          )}
+
+          {/* Already submitted banner */}
+          {!detailLoading && alreadySubmitted && (
+            <div className="us-submitted-banner">
+              <span className="material-symbols-outlined">check_circle</span>
+              Reading already submitted for this month. You can update it below.
+            </div>
+          )}
+
+          {/* No active bill — all cancelled or none created */}
+          {!detailLoading && noBill && (
+            <div className="us-no-bill">
+              <div className="us-no-bill-icon">
+                <span className="material-symbols-outlined">remove_circle</span>
+              </div>
+              <div>
+                <p className="us-no-bill-title">No Active Bill Pending</p>
+                <p className="us-no-bill-sub">Your gas bill for this month hasn&apos;t been generated yet and no pending bills exist. Please contact management for more information.</p>
+              </div>
+            </div>
+          )}
+
+          {/* Detail fetch error */}
+          {!detailLoading && detailError && (
+            <div className="us-submitted-banner warn">
+              <span className="material-symbols-outlined">info</span>
+              {detailError}
+            </div>
+          )}
+
+          <div className="us-card-period" style={{ display: noBill ? 'none' : '' }}>
             <div>
               <p className="us-period-label">Billing Period</p>
               <h3 className="us-period-value">{getCurrentPeriod()}</h3>
@@ -291,7 +432,7 @@ function UtilityReadingTab({ config }) {
                 <div className="us-rate-chip-body">
                   <span className="us-rate-chip-label">Current Rate</span>
                   <span className="us-rate-chip-value">
-                    {config.rateAmount}
+                    {liveRateAmount}
                     <span className="us-rate-chip-unit"> / {config.unit}</span>
                   </span>
                 </div>
@@ -299,7 +440,7 @@ function UtilityReadingTab({ config }) {
             </div>
           </div>
 
-          <div className="us-card-body">
+          <div className="us-card-body" style={{ display: noBill ? 'none' : '' }}>
             <div className="us-input-col">
               <div className="us-input-group">
                 <label className="us-input-label">Current Reading ({config.unit})</label>
@@ -317,7 +458,9 @@ function UtilityReadingTab({ config }) {
               <div className="us-summary">
                 <div className="us-summary-row">
                   <span className="us-summary-label">Previous Reading</span>
-                  <span className="us-summary-value">{config.previousReading}</span>
+                  <span className="us-summary-value">
+                    {detailLoading ? '—' : prevReadingDisplay}
+                  </span>
                 </div>
                 <div className="us-summary-row">
                   <span className="us-summary-label">Consumed Units</span>
@@ -379,14 +522,28 @@ function UtilityReadingTab({ config }) {
             </div>
           </div>
 
-          <div className="us-submit-row">
-            <button type="button" className="us-submit-btn" onClick={handleSubmit} disabled={submitting}>
-              {submitting ? (
-                <><div className="us-btn-spinner" />Submitting…</>
-              ) : (
-                <><span className="material-symbols-outlined" style={{ fontSize: '18px' }}>send</span>Submit Reading</>
-              )}
-            </button>
+          <div className="us-submit-row" style={{ display: noBill ? 'none' : '' }}>
+            {billStatus === 2 ? (
+              <button type="button" className="us-submit-btn us-pay-now-btn">
+                <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>payment</span>
+                Pay Now
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="us-submit-btn"
+                onClick={billStatus === 1 ? undefined : handleSubmit}
+                disabled={submitting || billStatus === 1}
+              >
+                {submitting ? (
+                  <><div className="us-btn-spinner" />Submitting…</>
+                ) : billStatus === 1 ? (
+                  <><span className="material-symbols-outlined" style={{ fontSize: '18px' }}>check_circle</span>Already Submitted</>
+                ) : (
+                  <><span className="material-symbols-outlined" style={{ fontSize: '18px' }}>send</span>Submit Reading</>
+                )}
+              </button>
+            )}
           </div>
           {submitSuccess && <p className="us-feedback success">Reading submitted successfully!</p>}
           {submitError && <p className="us-feedback error">{submitError}</p>}
