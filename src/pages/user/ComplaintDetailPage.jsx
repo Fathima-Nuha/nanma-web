@@ -39,6 +39,9 @@ function ComplaintDetailPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [imgZoom, setImgZoom] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+  const [deleteError, setDeleteError] = useState(null)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   useEffect(() => {
     const flatId = localStorage.getItem('selected_apartment_id')
@@ -80,6 +83,37 @@ function ComplaintDetailPage() {
 
   const timelineSteps = complaint ? getTimelineSteps(complaint.statusClass, complaint.createdAt) : []
 
+  const handleDelete = () => {
+    const flatId = localStorage.getItem('selected_apartment_id')
+    const userId = localStorage.getItem('user_id')
+    setDeleting(true)
+    setDeleteError(null)
+    fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/delete_complaint`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+        body: JSON.stringify({ complaint_id: id, flat_id: flatId, user_id: Number(userId) }),
+      }
+    )
+      .then(res => res.json())
+      .then(data => {
+        if (data.error || data.errors) {
+          setDeleteError(data.error ?? data.errors ?? 'Failed to delete.')
+          setDeleting(false)
+          return
+        }
+        navigate('/user/complaints')
+      })
+      .catch(() => {
+        setDeleteError('Failed to cancel complaint. Please try again.')
+        setDeleting(false)
+      })
+  }
+
   return (
     <div className="cd-page">
       {/* Breadcrumbs */}
@@ -112,7 +146,7 @@ function ComplaintDetailPage() {
               </p>
             </div>
             <div className="cd-header-actions">
-              <button type="button" className="cd-btn-outline">
+              <button type="button" className="cd-btn-outline" onClick={() => navigate(`/user/complaints/${id}/edit`)}>
                 <span className="material-symbols-outlined">edit</span>
                 Edit Complaint
               </button>
@@ -219,9 +253,9 @@ function ComplaintDetailPage() {
               </div>
 
               {/* Cancel */}
-              <button type="button" className="cd-cancel-btn">
+              <button type="button" className="cd-cancel-btn" onClick={() => setShowDeleteModal(true)} disabled={deleting}>
                 <span className="material-symbols-outlined">delete</span>
-                Cancel Complaint
+                {deleting ? 'Cancelling…' : 'Cancel Complaint'}
               </button>
             </div>
           </div>
@@ -235,6 +269,44 @@ function ComplaintDetailPage() {
             <span className="material-symbols-outlined">close</span>
           </button>
           <img src={complaint.image} alt="Complaint preview" />
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && (
+        <div className="cd-modal-backdrop" onClick={() => !deleting && setShowDeleteModal(false)}>
+          <div className="cd-modal" onClick={e => e.stopPropagation()}>
+            <div className="cd-modal-icon">
+              <span className="material-symbols-outlined">delete_forever</span>
+            </div>
+            <h3 className="cd-modal-title">Cancel Complaint?</h3>
+            <p className="cd-modal-body">
+              This will permanently remove your complaint. This action cannot be undone.
+            </p>
+            {deleteError && <p className="cd-delete-error">{deleteError}</p>}
+            <div className="cd-modal-actions">
+              <button
+                type="button"
+                className="cd-modal-btn-cancel"
+                onClick={() => setShowDeleteModal(false)}
+                disabled={deleting}
+              >
+                Keep Complaint
+              </button>
+              <button
+                type="button"
+                className="cd-modal-btn-confirm"
+                onClick={handleDelete}
+                disabled={deleting}
+              >
+                {deleting ? (
+                  <><span className="cd-modal-spinner" />Cancelling…</>
+                ) : (
+                  <><span className="material-symbols-outlined">delete</span>Yes, Cancel</>
+                )}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

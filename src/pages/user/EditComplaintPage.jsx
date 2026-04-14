@@ -1,20 +1,55 @@
-import React, { useState, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect, useRef } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import './CreateComplaintPage.css'
 
 const TOPIC_CHIPS = ['Plumbing', 'Electrical', 'HVAC', 'Cleaning', 'Security', 'Pest Control']
 
-function CreateComplaintPage() {
+function EditComplaintPage() {
   const navigate = useNavigate()
+  const { id } = useParams()
   const fileInputRef = useRef(null)
 
+  const [loadingData, setLoadingData] = useState(true)
+  const [loadError, setLoadError] = useState(null)
+
   const [form, setForm] = useState({ topic: '', description: '' })
+  const [existingImageUrl, setExistingImageUrl] = useState(null)
   const [imageFile, setImageFile] = useState(null)
   const [imagePreview, setImagePreview] = useState(null)
   const [imgLoading, setImgLoading] = useState(false)
   const [dragOver, setDragOver] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState(null)
+
+  // Load existing complaint data
+  useEffect(() => {
+    const flatId = localStorage.getItem('selected_apartment_id')
+    if (!flatId || !id) return
+    setLoadingData(true)
+    fetch(
+      `${import.meta.env.VITE_API_BASE_URL}/api/v1/get_complaint`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+        body: JSON.stringify({ flat_id: flatId, complaint_id: id }),
+      }
+    )
+      .then(res => res.json())
+      .then(data => {
+        const c = (data.complaint ?? [])[0]
+        if (!c) { setLoadError('Complaint not found.'); return }
+        setForm({ topic: c.topic ?? '', description: c.description ?? '' })
+        if (c.complaint_image) {
+          setExistingImageUrl(c.complaint_image)
+          setImagePreview(c.complaint_image)
+        }
+      })
+      .catch(() => setLoadError('Failed to load complaint.'))
+      .finally(() => setLoadingData(false))
+  }, [id])
 
   const handleChange = e => {
     const { name, value } = e.target
@@ -24,6 +59,7 @@ function CreateComplaintPage() {
   const handleFileSelect = file => {
     if (!file) return
     setImgLoading(true)
+    setExistingImageUrl(null)
     setImageFile(file)
     setImagePreview(URL.createObjectURL(file))
   }
@@ -32,6 +68,7 @@ function CreateComplaintPage() {
     e.stopPropagation()
     setImageFile(null)
     setImagePreview(null)
+    setExistingImageUrl(null)
     setImgLoading(false)
     if (fileInputRef.current) fileInputRef.current.value = ''
   }
@@ -55,13 +92,14 @@ function CreateComplaintPage() {
     setError(null)
 
     const body = new FormData()
+    body.append('complaint_id', id)
     body.append('flat_id', flatId)
     body.append('building_id', buildingId)
     body.append('topic', form.topic.trim())
     body.append('description', form.description.trim())
     if (imageFile) body.append('complaint_image', imageFile)
 
-    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/create_complaint`, {
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/update_complaint`, {
       method: 'POST',
       headers: { Authorization: `Bearer ${localStorage.getItem('access_token')}` },
       body,
@@ -69,17 +107,20 @@ function CreateComplaintPage() {
       .then(res => res.json())
       .then(data => {
         if (data.error || data.errors) {
-          setError(data.error ?? data.errors ?? 'Submission failed.')
+          setError(data.error ?? data.errors ?? 'Update failed.')
           setSubmitting(false)
           return
         }
-        navigate('/user/complaints')
+        navigate(`/user/complaints/${id}`)
       })
       .catch(() => {
-        setError('Failed to submit complaint. Please try again.')
+        setError('Failed to update complaint. Please try again.')
         setSubmitting(false)
       })
   }
+
+  if (loadingData) return <div className="cc-page"><p className="cc-load-msg">Loading complaint…</p></div>
+  if (loadError) return <div className="cc-page"><p className="cc-load-msg cc-load-error">{loadError}</p></div>
 
   return (
     <div className="cc-page">
@@ -89,14 +130,16 @@ function CreateComplaintPage() {
         <span className="material-symbols-outlined cc-breadcrumb-sep">chevron_right</span>
         <button type="button" className="cc-breadcrumb-link" onClick={() => navigate('/user/complaints')}>Complaints</button>
         <span className="material-symbols-outlined cc-breadcrumb-sep">chevron_right</span>
-        <span className="cc-breadcrumb-current">File New Complaint</span>
+        <button type="button" className="cc-breadcrumb-link" onClick={() => navigate(`/user/complaints/${id}`)}>Complaint Details</button>
+        <span className="material-symbols-outlined cc-breadcrumb-sep">chevron_right</span>
+        <span className="cc-breadcrumb-current">Edit Complaint</span>
       </nav>
 
       {/* Editorial Header */}
       <header className="cc-header">
-        <span className="cc-header-eyebrow">Request Maintenance</span>
+        <span className="cc-header-eyebrow">Update Request</span>
         <h1 className="cc-header-title">
-          File a New<br />
+          Edit Your<br />
           <span className="cc-header-accent">Complaint</span>
         </h1>
       </header>
@@ -119,7 +162,6 @@ function CreateComplaintPage() {
                     autoComplete="off"
                   />
                 </div>
-                {/* Quick chips */}
                 <div className="cc-chips">
                   {TOPIC_CHIPS.map(chip => (
                     <button
@@ -143,13 +185,13 @@ function CreateComplaintPage() {
                   value={form.description}
                   onChange={handleChange}
                   placeholder="Please provide detailed information about the issue..."
-                  rows={1}
+                  rows={3}
                 />
               </div>
 
               {/* Image Upload */}
               <div className="cc-field">
-                <label className="cc-label">Add Image / Evidence</label>
+                <label className="cc-label">Image / Evidence</label>
                 <div
                   className={`cc-dropzone ${dragOver ? 'drag-over' : ''} ${imagePreview ? 'has-image' : ''}`}
                   onDragOver={e => { e.preventDefault(); setDragOver(true) }}
@@ -172,7 +214,7 @@ function CreateComplaintPage() {
                         style={imgLoading ? { visibility: 'hidden' } : {}}
                       />
                       {!imgLoading && !submitting && (
-                        <label htmlFor="cc-file-input" className="cc-preview-overlay">
+                        <label htmlFor="ec-file-input" className="cc-preview-overlay">
                           <span className="material-symbols-outlined">photo_camera</span>
                           <span>Change image</span>
                         </label>
@@ -195,7 +237,7 @@ function CreateComplaintPage() {
                       )}
                     </>
                   ) : (
-                    <label htmlFor="cc-file-input" className="cc-upload-label">
+                    <label htmlFor="ec-file-input" className="cc-upload-label">
                       <div className="cc-dropzone-icon">
                         <span className="material-symbols-outlined">cloud_upload</span>
                       </div>
@@ -205,14 +247,13 @@ function CreateComplaintPage() {
                   )}
                   <input
                     ref={fileInputRef}
-                    id="cc-file-input"
+                    id="ec-file-input"
                     type="file"
                     accept="image/*"
                     className="cc-hidden-input"
                     onChange={e => handleFileSelect(e.target.files?.[0])}
                   />
                 </div>
-                {/* Media type icons */}
                 <div className="cc-media-icons">
                   <div className="cc-media-icon"><span className="material-symbols-outlined">image</span></div>
                   <div className="cc-media-icon"><span className="material-symbols-outlined">videocam</span></div>
@@ -222,37 +263,45 @@ function CreateComplaintPage() {
 
               {error && <p className="cc-error">{error}</p>}
 
-              {/* Submit */}
-              <button type="submit" className="cc-submit-btn" disabled={submitting}>
-                {submitting ? 'Submitting…' : 'Submit Complaint'}
-                {!submitting && <span className="material-symbols-outlined">send</span>}
-              </button>
+              {/* Actions */}
+              <div className="cc-edit-actions">
+                <button
+                  type="button"
+                  className="cc-cancel-edit-btn"
+                  onClick={() => navigate(`/user/complaints/${id}`)}
+                  disabled={submitting}
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="cc-submit-btn cc-submit-btn--flex" disabled={submitting}>
+                  {submitting ? 'Saving…' : 'Save Changes'}
+                  {!submitting && <span className="material-symbols-outlined">check</span>}
+                </button>
+              </div>
             </form>
           </div>
         </section>
 
         {/* Sidebar */}
         <aside className="cc-sidebar">
-          {/* Guidelines */}
           <div className="cc-guidelines-card">
-            <h4 className="cc-guidelines-title">Complaint Guidelines</h4>
+            <h4 className="cc-guidelines-title">Editing Guidelines</h4>
             <ul className="cc-guidelines-list">
               <li className="cc-guideline-item">
                 <span className="cc-guideline-num">01</span>
-                <p>Be specific about the location and nature of the issue to help our team respond faster.</p>
+                <p>Update the topic and description to reflect the current state of the issue.</p>
               </li>
               <li className="cc-guideline-item">
                 <span className="cc-guideline-num">02</span>
-                <p>Attach photos or videos when possible to provide visual context for the technicians.</p>
+                <p>You can replace the existing image by selecting or dragging a new one.</p>
               </li>
               <li className="cc-guideline-item">
                 <span className="cc-guideline-num">03</span>
-                <p>For urgent safety matters, please contact our support desk directly.</p>
+                <p>Complaints that are already resolved or closed may not be editable.</p>
               </li>
             </ul>
           </div>
 
-          {/* Common topics */}
           <div className="cc-chips-block">
             {TOPIC_CHIPS.map(chip => (
               <button
@@ -271,4 +320,4 @@ function CreateComplaintPage() {
   )
 }
 
-export default React.memo(CreateComplaintPage)
+export default React.memo(EditComplaintPage)

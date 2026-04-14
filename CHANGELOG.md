@@ -5,6 +5,23 @@ Format: `[Date] — What changed | Why / Notes`
 
 ---
 
+## [2026-04-14]
+
+### Added
+- `EditComplaintPage.jsx` (new file)
+- `UtilityScanPage.css` (new file)
+- `UtilityScanPage.jsx` (new file)
+
+### Changed
+- `UserLayout.jsx`
+- `ComplaintDetailPage.css`
+- `ComplaintDetailPage.jsx`
+- `CreateComplaintPage.css`
+- `CreateComplaintPage.jsx`
+- `AppRouter.jsx`
+
+---
+
 ## [2026-04-08] — Restructure: user module + docs + automation
 
 ### Added

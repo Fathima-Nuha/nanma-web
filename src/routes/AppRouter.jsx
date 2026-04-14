@@ -15,6 +15,8 @@ import CreateCommunityServiceRequestPage from '../pages/user/CreateCommunityServ
 import ComplaintsPage from '../pages/user/ComplaintsPage'
 import ComplaintDetailPage from '../pages/user/ComplaintDetailPage'
 import CreateComplaintPage from '../pages/user/CreateComplaintPage'
+import EditComplaintPage from '../pages/user/EditComplaintPage'
+import UtilityScanPage from '../pages/user/UtilityScanPage'
 import DashboardPage from '../pages/admin/DashboardPage'
 import ApartmentGroupPage from '../pages/admin/ApartmentGroupPage'
 
@@ -39,6 +41,8 @@ function AppRouter() {
         <Route path="/user/complaints" element={<ComplaintsPage />} />
         <Route path="/user/complaints/create" element={<CreateComplaintPage />} />
         <Route path="/user/complaints/:id" element={<ComplaintDetailPage />} />
+        <Route path="/user/complaints/:id/edit" element={<EditComplaintPage />} />
+        <Route path="/user/utility" element={<UtilityScanPage />} />
       </Route>
 
       <Route path="/admin/dashboard" element={<DashboardPage />} />
