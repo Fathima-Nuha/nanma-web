@@ -20,6 +20,7 @@ import UtilityScanPage from '../pages/user/UtilityScanPage'
 import FacilitiesPage from '../pages/user/FacilitiesPage'
 import FacilityBookingPage from '../pages/user/FacilityBookingPage'
 import FacilityBookingEditPage from '../pages/user/FacilityBookingEditPage'
+import DailyBasketPage from '../pages/user/DailyBasketPage'
 import DashboardPage from '../pages/admin/DashboardPage'
 import ApartmentGroupPage from '../pages/admin/ApartmentGroupPage'
 
@@ -49,6 +50,7 @@ function AppRouter() {
         <Route path="/user/facilities" element={<FacilitiesPage />} />
         <Route path="/user/facilities/book" element={<FacilityBookingPage />} />
         <Route path="/user/facilities/booking/:id" element={<FacilityBookingEditPage />} />
+        <Route path="/user/daily-basket" element={<DailyBasketPage />} />
       </Route>
 
       <Route path="/admin/dashboard" element={<DashboardPage />} />

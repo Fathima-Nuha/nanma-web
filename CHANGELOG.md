@@ -8,6 +8,19 @@ Format: `[Date] — What changed | Why / Notes`
 ## [2026-04-17]
 
 ### Added
+- `DailyBasketPage.css` (new file)
+- `DailyBasketPage.jsx` (new file)
+
+### Changed
+- `UserLayout.jsx`
+- `UserDashboardPage.jsx`
+- `AppRouter.jsx`
+
+---
+
+## [2026-04-17]
+
+### Added
 - `FacilitiesPage.css` (new file)
 - `FacilitiesPage.jsx` (new file)
 - `FacilityBookingEditPage.css` (new file)

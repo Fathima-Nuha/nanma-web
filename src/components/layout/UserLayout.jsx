@@ -7,7 +7,7 @@ const NAV_ITEMS = [
   { key: 'complaints', label: 'Complaints', icon: 'report_problem', path: '/user/complaints' },
   { key: 'utility', label: 'Utility Scan', icon: 'sensors', path: '/user/utility' },
   { key: 'facilities', label: 'Facilities', icon: 'layers', path: '/user/facilities' },
-  { key: 'basket', label: 'Daily Basket', icon: 'shopping_basket' },
+  { key: 'basket', label: 'Daily Basket', icon: 'shopping_basket', path: '/user/daily-basket' },
   { key: 'farm2door', label: 'Farm2Door', icon: 'eco' },
   { key: 'payments', label: 'Payments', icon: 'receipt_long' },
   { key: 'accounts', label: 'My Accounts', icon: 'manage_accounts' },

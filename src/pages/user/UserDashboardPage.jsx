@@ -97,6 +97,7 @@ const NAV_PATHS = {
   complaints: '/user/complaints',
   utility: '/user/utility',
   facilities: '/user/facilities',
+  basket: '/user/daily-basket',
 }
 
 function UserDashboardPage() {
