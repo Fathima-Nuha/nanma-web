@@ -73,10 +73,12 @@ function getCurrentPeriod() {
   return new Date().toLocaleString('en-US', { month: 'long', year: 'numeric' })
 }
 
+const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December']
+
 const SAMPLE_BILLS = [
-  { id: 1, period: 'March 2026',   uploaded_at: '2026-04-01T10:00:00Z', bill_image_url: 'https://placehold.co/600x800?text=March+2026' },
-  { id: 2, period: 'February 2026', uploaded_at: '2026-03-02T10:00:00Z', bill_image_url: 'https://placehold.co/600x800?text=Feb+2026' },
-  { id: 3, period: 'January 2026',  uploaded_at: '2026-02-01T10:00:00Z', bill_image_url: 'https://placehold.co/600x800?text=Jan+2026' },
+  { month: 3, year: 2026, image: 'https://placehold.co/600x800?text=March+2026',    updated_by: 'Management' },
+  { month: 2, year: 2026, image: 'https://placehold.co/600x800?text=Feb+2026',      updated_by: 'Management' },
+  { month: 1, year: 2026, image: 'https://placehold.co/600x800?text=Jan+2026',      updated_by: 'Management' },
 ]
 
 function ElectricityTab() {
@@ -92,16 +94,16 @@ function ElectricityTab() {
     if (!flatId || !buildingId) return
     setLoading(true)
     setError(null)
-    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/get_electricity_bills`, {
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/get_electricity_bill`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ flat_id: flatId, building_id: buildingId }),
+      body: JSON.stringify({ appartment_id: flatId, building_id: buildingId }),
     })
       .then(res => res.json())
-      .then(data => setBills(data.bills?.length ? data.bills : SAMPLE_BILLS))
+      .then(data => setBills(data.electricity_details?.length ? data.electricity_details : SAMPLE_BILLS))
       .catch(() => setError('Failed to load bills. Please try again.'))
       .finally(() => setLoading(false))
   }, [])
@@ -150,31 +152,34 @@ function ElectricityTab() {
             <span>Action</span>
           </div>
           <div className="ec-list-body">
-            {bills.map((bill, i) => (
-              <div key={bill.id ?? i} className="ec-list-row">
-                <div className="ec-list-row-left">
-                  <div className="ec-list-row-icon">
-                    <span className="material-symbols-outlined">receipt_long</span>
+            {bills.map((bill, i) => {
+              const period = bill.month && bill.year
+                ? `${MONTH_NAMES[bill.month - 1]} ${bill.year}`
+                : '—'
+              const subText = bill.updated_by ? `Updated by ${bill.updated_by}` : ''
+              const imageUrl = bill.image
+              return (
+                <div key={bill.id ?? i} className="ec-list-row">
+                  <div className="ec-list-row-left">
+                    <div className="ec-list-row-icon">
+                      <span className="material-symbols-outlined">receipt_long</span>
+                    </div>
+                    <div className="ec-list-period">
+                      <p className="ec-list-period-name">{period}</p>
+                      <p className="ec-list-period-sub">{subText}</p>
+                    </div>
                   </div>
-                  <div className="ec-list-period">
-                    <p className="ec-list-period-name">{bill.period ?? '—'}</p>
-                    <p className="ec-list-period-sub">
-                      {bill.uploaded_at
-                        ? `Uploaded on ${new Date(bill.uploaded_at).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}`
-                        : ''}
-                    </p>
-                  </div>
+                  <button
+                    type="button"
+                    className="ec-list-view-btn"
+                    onClick={() => setLightboxUrl(imageUrl)}
+                  >
+                    <span className="material-symbols-outlined">open_in_new</span>
+                    View Bill
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  className="ec-list-view-btn"
-                  onClick={() => setLightboxUrl(bill.bill_image_url)}
-                >
-                  <span className="material-symbols-outlined">open_in_new</span>
-                  View Bill
-                </button>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       )}

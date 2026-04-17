@@ -1,0 +1,484 @@
+/* ── FacilityBookingPage ── */
+.fb-page {
+  padding: 20px 40px 80px;
+  font-family: 'Inter', sans-serif;
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* ── Back button ── */
+.fb-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #7e766a;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 40px;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  transition: color 0.2s;
+}
+
+.fb-back:hover {
+  color: #6e5c37;
+}
+
+.fb-back .material-symbols-outlined {
+  font-size: 1.1rem;
+  transition: transform 0.2s;
+}
+
+.fb-back:hover .material-symbols-outlined {
+  transform: translateX(-3px);
+}
+
+/* ── Header ── */
+.fb-header {
+  margin-bottom: 48px;
+}
+
+.fb-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #6e5c37;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.fb-title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  color: #1b1c19;
+  margin: 0;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.fb-title span {
+  color: #c1aa7f;
+}
+
+/* ── Layout grid ── */
+.fb-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .fb-layout {
+    grid-template-columns: 1fr 420px;
+    gap: 48px;
+  }
+}
+
+/* ── Form Card ── */
+.fb-form-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(207, 197, 183, 0.3);
+  padding: 40px 44px;
+  box-shadow: 0 12px 32px rgba(27, 28, 25, 0.06);
+}
+
+/* ── Facility Info strip ── */
+.fb-facility-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 20px;
+  background: #f5f3ee;
+  border-radius: 10px;
+  margin-bottom: 36px;
+}
+
+.fb-facility-icon {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, #6e5c37, #c1aa7f);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.fb-facility-icon .material-symbols-outlined {
+  font-size: 1.25rem;
+  color: #fff;
+}
+
+.fb-facility-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.fb-facility-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1b1c19;
+  margin: 0 0 2px 0;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fb-facility-desc {
+  font-size: 0.75rem;
+  color: #7e766a;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fb-facility-rate {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.fb-facility-rate-label {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: rgba(27, 28, 25, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.fb-facility-rate-value {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #6e5c37;
+  font-family: 'Manrope', 'Inter', sans-serif;
+}
+
+/* ── Form fields ── */
+.fb-form {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.fb-field {
+  position: relative;
+}
+
+.fb-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #7e766a;
+  margin-bottom: 12px;
+  font-family: 'Manrope', 'Inter', sans-serif;
+}
+
+.fb-input-wrap {
+  position: relative;
+}
+
+.fb-input {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid rgba(207, 197, 183, 0.6);
+  padding: 12px 40px 12px 0;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  color: #1b1c19;
+  transition: border-color 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.fb-input:focus {
+  border-bottom-color: #6e5c37;
+}
+
+/* Stretch the native calendar indicator over the whole input so clicking anywhere opens the picker */
+.fb-input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.fb-input-icon {
+  position: absolute;
+  right: 0;
+  bottom: 12px;
+  font-size: 1.1rem;
+  color: #6e5c37;
+  pointer-events: none;
+}
+
+/* ── Custom Time Picker ── */
+.fb-time-picker {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-bottom: 2px solid rgba(207, 197, 183, 0.6);
+  transition: border-color 0.2s;
+  padding-bottom: 2px;
+}
+
+.fb-time-picker:focus-within {
+  border-bottom-color: #6e5c37;
+}
+
+.fb-time-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  color: #1b1c19;
+  padding: 10px 4px 10px 0;
+  cursor: pointer;
+  width: 48px;
+  text-align: center;
+}
+
+.fb-time-select:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.fb-time-select option[value=""][disabled] {
+  color: #9e9689;
+}
+
+.fb-time-sep {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #6e5c37;
+  padding: 0 2px;
+  line-height: 1;
+}
+
+.fb-time-icon {
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  font-size: 1.1rem;
+  color: #6e5c37;
+  pointer-events: none;
+}
+
+/* Date/time side by side */
+.fb-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+/* ── Notes textarea ── */
+.fb-textarea {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid rgba(207, 197, 183, 0.6);
+  padding: 12px 0;
+  font-size: 0.95rem;
+  font-family: 'Inter', sans-serif;
+  color: #1b1c19;
+  resize: none;
+  transition: border-color 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.fb-textarea:focus {
+  border-bottom-color: #6e5c37;
+}
+
+/* ── Submit Button ── */
+.fb-submit {
+  width: 100%;
+  padding: 18px 24px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #6e5c37 0%, #c1aa7f 100%);
+  color: #ffffff;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(110, 92, 55, 0.3);
+  transition: opacity 0.15s, transform 0.15s;
+  margin-top: 8px;
+}
+
+.fb-submit:hover {
+  opacity: 0.9;
+  transform: scale(1.01);
+}
+
+.fb-submit:active {
+  transform: scale(0.98);
+}
+
+.fb-submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── Sidebar ── */
+.fb-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Sidebar image block */
+.fb-img-block {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.fb-img-block img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fb-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 55%);
+  display: flex;
+  align-items: flex-end;
+  padding: 24px;
+}
+
+.fb-img-caption {
+  color: #fff;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* Guidelines card */
+.fb-guidelines {
+  background: #f5f3ee;
+  border-radius: 16px;
+  padding: 28px 30px;
+}
+
+.fb-guidelines-title {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  color: #1b1c19;
+  margin: 0 0 20px 0;
+}
+
+.fb-guidelines-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.fb-guideline-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.fb-guideline-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  color: #c1aa7f;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.fb-guideline-text {
+  font-size: 0.8rem;
+  color: rgba(27, 28, 25, 0.7);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Success / Error state ── */
+.fb-result {
+  text-align: center;
+  padding: 56px 24px;
+}
+
+.fb-result-icon {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.fb-result-icon.success {
+  color: #2e7d32;
+}
+
+.fb-result-icon.error {
+  color: #ba1a1a;
+}
+
+.fb-result-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  color: #1b1c19;
+  margin: 0 0 8px 0;
+}
+
+.fb-result-body {
+  font-size: 0.85rem;
+  color: #7e766a;
+  margin: 0 0 28px 0;
+}
+
+.fb-result-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #6e5c37, #c1aa7f);
+  color: #fff;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+}

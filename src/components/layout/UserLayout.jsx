@@ -6,7 +6,7 @@ const NAV_ITEMS = [
   { key: 'services', label: 'Services', icon: 'home_repair_service', path: '/user/services' },
   { key: 'complaints', label: 'Complaints', icon: 'report_problem', path: '/user/complaints' },
   { key: 'utility', label: 'Utility Scan', icon: 'sensors', path: '/user/utility' },
-  { key: 'facilities', label: 'Facilities', icon: 'layers' },
+  { key: 'facilities', label: 'Facilities', icon: 'layers', path: '/user/facilities' },
   { key: 'basket', label: 'Daily Basket', icon: 'shopping_basket' },
   { key: 'farm2door', label: 'Farm2Door', icon: 'eco' },
   { key: 'payments', label: 'Payments', icon: 'receipt_long' },

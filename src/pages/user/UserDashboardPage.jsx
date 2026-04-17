@@ -95,6 +95,8 @@ const SPOTLIGHT_SLIDES = [
 const NAV_PATHS = {
   services: '/user/services',
   complaints: '/user/complaints',
+  utility: '/user/utility',
+  facilities: '/user/facilities',
 }
 
 function UserDashboardPage() {

@@ -1,0 +1,570 @@
+/* ── FacilitiesPage ── */
+.fac-page {
+  padding: 20px 40px 80px;
+  font-family: 'Inter', sans-serif;
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* ── Header ── */
+.fac-header {
+  margin-bottom: 48px;
+}
+
+.fac-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #1b1c19;
+  margin: 0 0 12px 0;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.fac-subtitle {
+  font-size: 1.05rem;
+  color: #4c463b;
+  max-width: 560px;
+  line-height: 1.7;
+  margin: 0;
+  font-weight: 300;
+}
+
+/* ── Tabs ── */
+.fac-tabs {
+  display: flex;
+  gap: 40px;
+  border-bottom: 1px solid rgba(207, 197, 183, 0.2);
+  margin-bottom: 40px;
+}
+
+.fac-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(27, 28, 25, 0.5);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  transition: color 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.fac-tab .material-symbols-outlined {
+  font-size: 1.1rem;
+}
+
+.fac-tab:hover {
+  color: #1b1c19;
+}
+
+.fac-tab.active {
+  color: #6e5c37;
+  font-weight: 700;
+  border-bottom-color: #6e5c37;
+}
+
+/* ── Bento Grid ── */
+.fac-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+  margin-bottom: 48px;
+}
+
+@media (min-width: 640px) {
+  .fac-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1060px) {
+  .fac-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ── Card ── */
+.fac-card {
+  background: #ffffff;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(207, 197, 183, 0.3);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.fac-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px rgba(110, 92, 55, 0.12);
+}
+
+/* ── Card Hero ── */
+.fac-card-hero {
+  height: 96px;
+  background: linear-gradient(135deg, #6e5c37 0%, #c1aa7f 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.fac-card-hero--dim {
+  background: linear-gradient(135deg, #a09888 0%, #ccc5bb 100%);
+}
+
+.fac-hero-icon {
+  font-size: 2.1rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;
+}
+
+/* ── Availability Badge ── */
+.fac-avail-badge {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 9999px;
+}
+
+.fac-avail-badge.available {
+  background: rgba(255, 255, 255, 0.9);
+  color: #2e7d32;
+}
+
+.fac-avail-badge.unavailable {
+  background: rgba(255, 255, 255, 0.75);
+  color: #b71c1c;
+}
+
+/* ── Card Body ── */
+.fac-card-body {
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.fac-card-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1b1c19;
+  margin: 0 0 5px 0;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.fac-card-desc {
+  font-size: 0.78rem;
+  color: #7e766a;
+  margin: 0 0 16px 0;
+  line-height: 1.55;
+  flex: 1;
+}
+
+/* ── Card Footer ── */
+.fac-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(207, 197, 183, 0.2);
+}
+
+.fac-card-rate {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.fac-card-rate-label {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: rgba(27, 28, 25, 0.38);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 2px;
+}
+
+.fac-card-rate-value {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #6e5c37;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* ── Buttons ── */
+.fac-btn-primary {
+  background: linear-gradient(135deg, #6e5c37 0%, #c1aa7f 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 9999px;
+  border: none;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s, transform 0.15s;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  box-shadow: 0 3px 8px rgba(110, 92, 55, 0.22);
+}
+
+.fac-btn-primary:hover {
+  opacity: 0.9;
+  transform: scale(1.03);
+}
+
+.fac-btn-outline {
+  background: transparent;
+  color: #a09888;
+  font-weight: 700;
+  padding: 7px 14px;
+  border-radius: 9999px;
+  border: 1px solid rgba(207, 197, 183, 0.5);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: not-allowed;
+  white-space: nowrap;
+  font-family: 'Manrope', 'Inter', sans-serif;
+}
+
+.fac-btn-outline:disabled {
+  opacity: 0.6;
+}
+
+/* ── Promo Section ── */
+.fac-promo {
+  margin-top: 56px;
+  padding: 72px 48px;
+  background: #f0eee9;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.fac-promo-bg {
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  z-index: 0;
+  border-radius: 20px;
+}
+
+.fac-promo-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fac-promo-content {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+}
+
+.fac-promo-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #6e5c37;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.fac-promo-title {
+  font-size: clamp(1.6rem, 3.5vw, 3rem);
+  font-weight: 800;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  color: #1b1c19;
+  margin: 0 0 20px 0;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.fac-promo-body {
+  font-size: 0.95rem;
+  color: rgba(27, 28, 25, 0.65);
+  margin: 0 0 32px 0;
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+.fac-promo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #6e5c37;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.fac-promo-link .material-symbols-outlined {
+  transition: transform 0.2s;
+}
+
+.fac-promo-link:hover .material-symbols-outlined {
+  transform: translateX(6px);
+}
+
+/* ── Section Divider ── */
+.fac-section-divider {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(27, 28, 25, 0.35);
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(207, 197, 183, 0.2);
+}
+
+/* ── Loading / Error / Empty state ── */
+.fac-state-msg {
+  padding: 64px 0;
+  text-align: center;
+  color: #9a9186;
+}
+
+.fac-state-icon {
+  font-size: 2.8rem;
+  display: block;
+  margin-bottom: 12px;
+  color: #c1aa7f;
+}
+
+.fac-state-error .fac-state-icon {
+  color: #ba1a1a;
+}
+
+.fac-state-msg p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@keyframes fac-spin {
+  to { transform: rotate(360deg); }
+}
+
+.fac-spin {
+  display: inline-block;
+  animation: fac-spin 0.9s linear infinite;
+}
+
+/* ── Filter Chips ── */
+.fac-filters {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.fac-filter-chip {
+  padding: 7px 18px;
+  border-radius: 4px;
+  border: none;
+  background: #eae8e3;
+  color: #4c463b;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  font-family: 'Inter', sans-serif;
+}
+
+.fac-filter-chip:hover {
+  background: #dedad4;
+}
+
+.fac-filter-chip.active {
+  background: #f9dfb1;
+  color: #4e3e1c;
+}
+
+/* ── Booking List ── */
+.fac-booking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Column header */
+.fac-list-header {
+  display: grid;
+  grid-template-columns: 1fr 160px 110px 140px;
+  padding: 8px 24px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(27, 28, 25, 0.4);
+}
+
+.fac-lh-actions { text-align: right; }
+
+/* ── Booking Row ── */
+.fac-booking-row {
+  display: grid;
+  grid-template-columns: 1fr 160px 110px 140px;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid rgba(207, 197, 183, 0.25);
+  border-radius: 12px;
+  padding: 20px 24px;
+  transition: box-shadow 0.2s;
+}
+
+.fac-booking-row:hover {
+  box-shadow: 0 8px 24px rgba(110, 92, 55, 0.09);
+}
+
+.fac-booking-row:hover .fac-br-actions {
+  opacity: 1;
+}
+
+/* Facility cell */
+.fac-br-facility {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.fac-br-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #f0eee9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6e5c37;
+}
+
+.fac-br-icon .material-symbols-outlined {
+  font-size: 1.5rem;
+}
+
+.fac-br-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1b1c19;
+  margin: 0 0 4px;
+  font-family: 'Manrope', 'Inter', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.fac-br-date {
+  font-size: 0.75rem;
+  color: #7e766a;
+  margin: 0;
+}
+
+/* Time cell */
+.fac-br-time {
+  font-size: 0.82rem;
+  color: #1b1c19;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Status cell */
+.fac-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.fac-badge--pending {
+  background: #f9dfb1;
+  color: #4e3e1c;
+}
+
+.fac-badge--accepted {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.fac-badge--rejected,
+.fac-badge--cancelled {
+  background: #ffdad6;
+  color: #93000a;
+}
+
+.fac-badge--expired {
+  background: #e4e2dd;
+  color: #4c463b;
+}
+
+/* Actions cell */
+.fac-br-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.fac-br-btn {
+  background: none;
+  border: none;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  transition: opacity 0.15s;
+}
+
+.fac-br-btn:hover { opacity: 0.7; }
+
+.fac-br-btn--primary { color: #6e5c37; }
+.fac-br-btn--danger  { color: #ba1a1a; }
+
+/* ── Responsive collapse at narrow widths ── */
+@media (max-width: 700px) {
+  .fac-list-header { display: none; }
+
+  .fac-booking-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .fac-br-actions {
+    opacity: 1;
+    justify-content: flex-start;
+  }
+}

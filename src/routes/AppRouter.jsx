@@ -17,6 +17,9 @@ import ComplaintDetailPage from '../pages/user/ComplaintDetailPage'
 import CreateComplaintPage from '../pages/user/CreateComplaintPage'
 import EditComplaintPage from '../pages/user/EditComplaintPage'
 import UtilityScanPage from '../pages/user/UtilityScanPage'
+import FacilitiesPage from '../pages/user/FacilitiesPage'
+import FacilityBookingPage from '../pages/user/FacilityBookingPage'
+import FacilityBookingEditPage from '../pages/user/FacilityBookingEditPage'
 import DashboardPage from '../pages/admin/DashboardPage'
 import ApartmentGroupPage from '../pages/admin/ApartmentGroupPage'
 
@@ -43,6 +46,9 @@ function AppRouter() {
         <Route path="/user/complaints/:id" element={<ComplaintDetailPage />} />
         <Route path="/user/complaints/:id/edit" element={<EditComplaintPage />} />
         <Route path="/user/utility" element={<UtilityScanPage />} />
+        <Route path="/user/facilities" element={<FacilitiesPage />} />
+        <Route path="/user/facilities/book" element={<FacilityBookingPage />} />
+        <Route path="/user/facilities/booking/:id" element={<FacilityBookingEditPage />} />
       </Route>
 
       <Route path="/admin/dashboard" element={<DashboardPage />} />

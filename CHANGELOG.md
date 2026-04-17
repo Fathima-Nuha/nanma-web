@@ -5,6 +5,32 @@ Format: `[Date] — What changed | Why / Notes`
 
 ---
 
+## [2026-04-17]
+
+### Added
+- `FacilitiesPage.css` (new file)
+- `FacilitiesPage.jsx` (new file)
+- `FacilityBookingEditPage.css` (new file)
+- `FacilityBookingEditPage.jsx` (new file)
+- `FacilityBookingPage.css` (new file)
+- `FacilityBookingPage.jsx` (new file)
+
+### Changed
+- `CHANGELOG.md`
+- `UserLayout.jsx`
+- `UserDashboardPage.jsx`
+- `UtilityScanPage.jsx`
+- `AppRouter.jsx`
+
+---
+
+## [2026-04-16]
+
+### Changed
+- `UtilityScanPage.jsx`
+
+---
+
 ## [2026-04-14]
 
 ### Changed
